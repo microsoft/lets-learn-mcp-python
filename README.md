@@ -22,6 +22,8 @@ Set up your development environment and understand MCP fundamentals:
 
 **Start here**: [Part 1: Prerequisites and Setup →](part1-setup.md)
 
+* Note for a more in depth 'Getting Started' with MCP Demo check out (mcp-python-demo)[https://github.com/pamelafox/mcp-python-demo]
+
 ---
 
 ### [Part 2: Using MCP Servers - Python Study Buddy](part2-study-buddy-python.md)
@@ -110,8 +112,7 @@ letslearnmcp-python/
 - 📖 [MCP Official Documentation](https://modelcontextprotocol.io/)
 - 🛠️ [Python MCP SDK Repository](https://github.com/modelcontextprotocol/python-sdk)
 - 🐍 [Python MCP Examples](https://github.com/modelcontextprotocol/servers)
-- � [Python Study Buddy App](https://github.com/jamesmontemagno/PythonStudyBuddyMCP)
-- 🧠 [AI Research Learning Server](https://github.com/jamesmontemagno/AIResearchLearningMCP)
+- 🧠 [Quick Start Python MCP Demo](https://github.com/pamelafox/mcp-python-demo)
 - 📚 [ArXiv API Documentation](https://arxiv.org/help/api/user-manual)
 - 🔬 [Papers With Code API](https://paperswithcode.com/api/v1/docs/)
 
