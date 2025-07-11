@@ -1,15 +1,13 @@
-# LETSLEARNMCP-PYTHON
-
 # Let's Learn MCP with Python - Tutorial Series
 
-A comprehensive guide to understanding and building Model Context Protocol (MCP) Servers for Python developers.
+A comprehensive guide to understanding and building Model Context Protocol (MCP) Servers for Python developers through interactive learning experiences.
 
 ## What You'll Build
 
 By the end of this tutorial series, you'll have:
 
-1. **🎮 MyGame App** - A fun console application that uses existing MCP servers to manage classic Nintendo game data and create GitHub issues
-2. **🍽️ Lunch Roulette MCP Server** - Your own custom MCP server that helps AI assistants pick restaurants and track dining preferences
+1. **🐍 Python Study Buddy App** - An interactive console application that uses a custom MCP server to help developers learn Python concepts at beginner, intermediate, and expert levels
+2. **🧠 AI Research Learning MCP Server** - Your own advanced MCP server that helps AI assistants find the latest AI/ML research papers, highlight top discoveries, and create personalized study plans
 
 ## Tutorial Structure
 
@@ -26,48 +24,51 @@ Set up your development environment and understand MCP fundamentals:
 
 ---
 
-### [Part 2: Using MCP Servers - MyGame App](part2-game-app-python.md)
-**⏱️ Time: 15-30 minutes**
+### [Part 2: Using MCP Servers - Python Study Buddy](part2-study-buddy-python.md)
+**⏱️ Time: 20-35 minutes**
 
-Learn to use existing MCP servers by building a Nintendo games-themed application:
-- Configure GameMCP and GitHub MCP servers
-- Create Python models for game data using dataclasses
-- Build an interactive console application with ASCII art
-- Integrate with GitHub to create issues programmatically
-- Understand how AI assistants interact with MCP servers
+Learn to use MCP servers by building an interactive Python learning companion:
+- Configure a custom Python Learning MCP server
+- Create Python models for learning concepts using dataclasses
+- Build an interactive study session with progress tracking
+- Generate personalized coding challenges and explanations
+- Understand how AI assistants can enhance learning experiences
 
 **What you'll create**:
 ```
-🎮 Random Game Picker!
-======================
-Name: Super Mario Bros.
-Platform: NES
-Year: 1985
-Genre: Platformer
-Details: A legendary side-scrolling platformer...
+🐍 Python Study Buddy - Interactive Learning Session
+===================================================
+Level: Intermediate
+Topic: List Comprehensions
+Progress: 3/10 concepts mastered
+
+Challenge: Create a list comprehension that filters even numbers...
+💡 Hint: Use the modulo operator (%) to check for even numbers
+🎯 Your mission: Write code that demonstrates understanding!
 ```
 
-**Continue to**: [Part 2: MyGame App →](part2-game-app-python.md)
+**Continue to**: [Part 2: Python Study Buddy →](part2-study-buddy-python.md)
 
 ---
 
-### [Part 3: Building Your Own MCP Server - Lunch Roulette](part3-lunch-server-python.md)
-**⏱️ Time: 30-45 minutes**
+### [Part 3: Building Your Own MCP Server - AI Research Learning Hub](part3-ai-research-server-python.md)
+**⏱️ Time: 35-50 minutes**
 
-Build a complete MCP server from scratch:
-- Create a restaurant management service with JSON persistence
-- Implement four MCP tools for AI assistant integration
-- Handle async operations and error handling
-- Test and deploy your server
-- Understand MCP protocol implementation details
+Build an advanced MCP server that helps AI assistants with research and learning:
+- Create an AI/ML research paper discovery service
+- Implement tools for finding trending papers and breakthroughs
+- Build personalized study plan generation capabilities
+- Handle async web scraping and API integrations
+- Create intelligent content summarization and ranking
 
 **What you'll build**:
-- `get_restaurants()` - List all available restaurants
-- `add_restaurant()` - Add new dining options
-- `pick_random_restaurant()` - AI-powered lunch selection
-- `get_visit_statistics()` - Track dining patterns
+- `search_research_papers()` - Find latest AI/ML research by topic
+- `get_trending_papers()` - Discover what's hot in AI research
+- `create_study_plan()` - Generate personalized learning roadmaps
+- `summarize_paper()` - Create digestible summaries of complex research
+- `track_learning_progress()` - Monitor study achievements and goals
 
-**Continue to**: [Part 3: Lunch Roulette Server →](part3-lunch-server-python.md)
+**Continue to**: [Part 3: AI Research Learning Hub →](part3-ai-research-server-python.md)
 
 ---
 
@@ -75,21 +76,21 @@ Build a complete MCP server from scratch:
 
 If you're ready to dive in immediately:
 
-1. **Prerequisites**: Ensure you have VS Code, Python 3.12+, and Python extension installed
+1. **Prerequisites**: Ensure you have VS Code, Python 3.12+, Docker and Python extension installed
 2. **Choose your path**:
-   - 🆕 **New to MCP?** Start with [Part 1: Setup](part1-setup-python.md)
-   - 🔧 **Want to use MCP?** Jump to [Part 2: MyGame App](part2-game-app-python.md)
-   - 🏗️ **Ready to build?** Go to [Part 3: Lunch Server](part3-lunch-server-python.md)
+   - 🆕 **Need help getting set up?** Start with [Part 1: Setup](part1-setup-python.md)
+   - � **Want to learn Python with MCP?** Jump to [Part 2: Python Study Buddy](part2-study-buddy-python.md)
+   - 🧠 **Ready to build AI research tools?** Go to [Part 3: AI Research Server](part3-ai-research-server-python.md)
 
 ## Learning Outcomes
 
 After completing this tutorial series, you'll understand:
 
-- ✅ **MCP Fundamentals** - What MCP is and how it enables AI-tool integration
-- ✅ **Consumer Patterns** - How to use existing MCP servers in your applications
-- ✅ **Server Development** - How to build and deploy your own MCP servers
-- ✅ **Python Best Practices** - Async programming, dataclasses, and JSON handling
-- ✅ **AI Integration** - How AI assistants interact with your tools and services
+- ✅ **MCP Fundamentals** - What MCP is and how it enables AI-enhanced learning
+- ✅ **Consumer Patterns** - How to use MCP servers for educational applications
+- ✅ **Server Development** - How to build MCP servers for research and learning
+- ✅ **Python Best Practices** - Async programming, dataclasses, and API integration
+- ✅ **AI-Enhanced Learning** - How AI assistants can personalize education experiences
 
 ## Technology Stack
 
@@ -98,18 +99,19 @@ This tutorial uses modern Python development practices:
 - **Python 3.12+** - Latest Python runtime with performance improvements
 - **asyncio** - Asynchronous programming for MCP servers
 - **dataclasses** - Modern Python data modeling
-- **json** - Built-in JSON serialization
+- **json** - Built-in JSON serialization for learning data
 - **pathlib** - Modern file path handling
 - **mcp** - Official Python SDK for MCP server development
+- **httpx** - Modern HTTP client for research paper APIs
 
 ## Repository Structure
 
 ```
 letslearnmcp-python/
-├── README-python.md             # This overview
-├── part1-setup-python.md        # Prerequisites and environment setup
-├── part2-game-app-python.md     # Using existing MCP servers
-└── part3-lunch-server-python.md # Building your own MCP server
+├── README.md                        # This overview
+├── part1-setup.md                   # Prerequisites and environment setup
+├── part2-study-buddy.md             # Building Python learning companion
+└── part3-ai-research-server.md      # Creating AI research discovery server
 ```
 
 ## Additional Resources
@@ -117,8 +119,10 @@ letslearnmcp-python/
 - 📖 [MCP Official Documentation](https://modelcontextprotocol.io/)
 - 🛠️ [Python MCP SDK Repository](https://github.com/modelcontextprotocol/python-sdk)
 - 🐍 [Python MCP Examples](https://github.com/modelcontextprotocol/servers)
-- 🎮 [MyGame App Python Version](https://github.com/jamesmontemagno/MyGameAppMCP-Python)
-- 🍽️ [Lunch Roulette Python Version](https://github.com/jamesmontemagno/LunchRouletteMCP-Python)
+- � [Python Study Buddy App](https://github.com/jamesmontemagno/PythonStudyBuddyMCP)
+- 🧠 [AI Research Learning Server](https://github.com/jamesmontemagno/AIResearchLearningMCP)
+- 📚 [ArXiv API Documentation](https://arxiv.org/help/api/user-manual)
+- 🔬 [Papers With Code API](https://paperswithcode.com/api/v1/docs/)
 
 ## Contributing
 
@@ -130,7 +134,6 @@ This tutorial is open source! Feel free to:
 
 ---
 
-**Ready to get started?** Begin with [Part 1: Prerequisites and Setup →](part1-setup-python.md)
+**Ready to get started?** Begin with [Part 1: Prerequisites and Setup →](part1-setup.md)
 
-*Happy coding! 🎮🍽️*
-
+*Happy learning! 🐍🧠*
