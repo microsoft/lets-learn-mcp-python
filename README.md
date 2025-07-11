@@ -71,7 +71,7 @@ Build an advanced MCP server that helps you keep up with the latest AI Research:
 - Implement tools for finding trending papers and breakthroughs
 - Build personalized study plan generation capabilities
 - Create intelligent content summarization and ranking
-- Send daily AI Research Learning note to Slack or Teams 
+- Store daily AI Research Learning Notes in a Github Repo
 
 **What you'll build**:
 - `search_research_papers()` - Find latest AI/ML research by topic
