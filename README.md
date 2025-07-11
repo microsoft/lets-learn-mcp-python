@@ -27,14 +27,20 @@ Set up your development environment and understand MCP fundamentals:
 ### [Part 2: Using MCP Servers - Python Study Buddy](part2-study-buddy-python.md)
 **⏱️ Time: 20-35 minutes**
 
-Learn to use MCP servers by building an interactive Python learning companion:
+**Key Learning Objectives:**
+1. Create a basic MCP server in Python
+2. Use prompts with MCP
+3. Use basic tools with MCP
+
+**Outcomes:**
+Building an interactive Python learning companion:
 - Configure a custom Python Learning MCP server
 - Create Python models for learning concepts using dataclasses
 - Build an interactive study session with progress tracking
 - Generate personalized coding challenges and explanations
 - Understand how AI assistants can enhance learning experiences
 
-**What you'll create**:
+**Example of what you'll create**:
 ```
 🐍 Python Study Buddy - Interactive Learning Session
 ===================================================
@@ -52,8 +58,15 @@ Challenge: Create a list comprehension that filters even numbers...
 ---
 
 ### [Part 3: Building Your Own MCP Server - AI Research Learning Hub](part3-ai-research-server-python.md)
-**⏱️ Time: 35-50 minutes**
+**⏱️ Time: 20-35 minutes**
 
+**Key Learning Objectives:**
+1. Find and use external MCP servers 
+2. Add resources with MCP
+3. Work with tools 
+4. Share your MCP Server with others  
+
+**Outcomes:**
 Build an advanced MCP server that helps AI assistants with research and learning:
 - Create an AI/ML research paper discovery service
 - Implement tools for finding trending papers and breakthroughs
@@ -81,28 +94,6 @@ If you're ready to dive in immediately:
    - 🆕 **Need help getting set up?** Start with [Part 1: Setup](part1-setup-python.md)
    - � **Want to learn Python with MCP?** Jump to [Part 2: Python Study Buddy](part2-study-buddy-python.md)
    - 🧠 **Ready to build AI research tools?** Go to [Part 3: AI Research Server](part3-ai-research-server-python.md)
-
-## Learning Outcomes
-
-After completing this tutorial series, you'll understand:
-
-- ✅ **MCP Fundamentals** - What MCP is and how it enables AI-enhanced learning
-- ✅ **Consumer Patterns** - How to use MCP servers for educational applications
-- ✅ **Server Development** - How to build MCP servers for research and learning
-- ✅ **Python Best Practices** - Async programming, dataclasses, and API integration
-- ✅ **AI-Enhanced Learning** - How AI assistants can personalize education experiences
-
-## Technology Stack
-
-This tutorial uses modern Python development practices:
-
-- **Python 3.12+** - Latest Python runtime with performance improvements
-- **asyncio** - Asynchronous programming for MCP servers
-- **dataclasses** - Modern Python data modeling
-- **json** - Built-in JSON serialization for learning data
-- **pathlib** - Modern file path handling
-- **mcp** - Official Python SDK for MCP server development
-- **httpx** - Modern HTTP client for research paper APIs
 
 ## Repository Structure
 
