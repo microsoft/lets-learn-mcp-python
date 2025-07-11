@@ -22,7 +22,7 @@ Set up your development environment and understand MCP fundamentals:
 
 **Start here**: [Part 1: Prerequisites and Setup →](part1-setup.md)
 
-* Note for a more in depth 'Getting Started' with MCP Demo check out (mcp-python-demo)[https://github.com/pamelafox/mcp-python-demo]
+* Note for a more in depth 'Getting Started' with MCP Demo check out [mcp-python-demo](https://github.com/pamelafox/mcp-python-demo)
 
 ---
 
