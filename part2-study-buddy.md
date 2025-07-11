@@ -1,4 +1,3 @@
-````markdown
 # Part 2: Using MCP Servers - Building Python Study Buddy App
 
 > **Navigation**: [← Part 1: Setup](part1-setup.md) | [Next: Part 3 - AI Research Server →](part3-ai-research-server.md)
@@ -450,5 +449,3 @@ Ready to begin? (y/n): y
 > **Next Step**: Now that you've built a learning application with MCP, let's create an advanced MCP server for AI research discovery!
 
 **Continue to**: [Part 3 - Building Your AI Research Learning Hub →](part3-ai-research-server.md)
-
-````
