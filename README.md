@@ -81,7 +81,7 @@ Build an advanced MCP server that helps you keep up with the latest AI Research:
 - `track_learning_progress()` - Monitor study achievements and goals
 - `send_research_learning()` - Send study daily study note to the user 
 
-**Continue to**: [Part 3: AI Research Learning Hub →](part3-ai-research-server-python.md)
+**Continue to**: [Part 3: AI Research Learning Hub →](part3-ai-research-python.md)
 
 ---
 
