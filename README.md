@@ -11,7 +11,7 @@ By the end of this tutorial series, you'll have:
 
 ## Tutorial Structure
 
-### [Part 1: Prerequisites and Setup](part1-setup-python.md)
+### [Part 1: Prerequisites and Setup](part1-setup.md)
 **⏱️ Time: 15-20 minutes**
 
 Set up your development environment and understand MCP fundamentals:
@@ -20,7 +20,7 @@ Set up your development environment and understand MCP fundamentals:
 - Understand the client-server architecture
 - Verify your development environment
 
-**Start here**: [Part 1: Prerequisites and Setup →](part1-setup-python.md)
+**Start here**: [Part 1: Prerequisites and Setup →](part1-setup.md)
 
 ---
 
@@ -53,7 +53,7 @@ Challenge: Create a list comprehension that filters even numbers...
 🎯 Your mission: Write code that demonstrates understanding!
 ```
 
-**Continue to**: [Part 2: Python Study Buddy →](part2-study-buddy-python.md)
+**Continue to**: [Part 2: Python Study Buddy →](part2-study-buddy.md)
 
 ---
 
@@ -81,7 +81,7 @@ Build an advanced MCP server that helps you keep up with the latest AI Research:
 - `track_learning_progress()` - Monitor study achievements and goals
 - `send_research_learning()` - Send study daily study note to the user 
 
-**Continue to**: [Part 3: AI Research Learning Hub →](./part3-ai-research-python.md)
+**Continue to**: [Part 3: AI Research Learning Hub →](./part3-ai-research.md)
 
 ---
 
@@ -91,9 +91,9 @@ If you're ready to dive in immediately:
 
 1. **Prerequisites**: Ensure you have VS Code, Python 3.12+, Docker and Python extension installed
 2. **Choose your path**:
-   - 🆕 **Need help getting set up?** Start with [Part 1: Setup](part1-setup-python.md)
-   - � **Want to learn Python with MCP?** Jump to [Part 2: Python Study Buddy](part2-study-buddy-python.md)
-   - 🧠 **Ready to build AI research tools?** Go to [Part 3: AI Research Server](part3-ai-research-server-python.md)
+   - 🆕 **Need help getting set up?** Start with [Part 1: Setup](part1-setup.md)
+   - � **Want to learn Python with MCP?** Jump to [Part 2: Python Study Buddy](part2-study-buddy.md)
+   - 🧠 **Ready to build AI research tools?** Go to [Part 3: AI Research Server](part3-ai-research-server.md)
 
 ## Repository Structure
 
