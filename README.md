@@ -57,22 +57,21 @@ Challenge: Create a list comprehension that filters even numbers...
 
 ---
 
-### [Part 3: Building Your Own MCP Server - AI Research Learning Hub](part3-ai-research-server-python.md)
+### [Part 3: Building Your Own MCP Server - AI Research Learning Assistant](part3-ai-research-server-python.md)
 **⏱️ Time: 20-35 minutes**
 
 **Key Learning Objectives:**
 1. Find and use external MCP servers 
 2. Add resources with MCP
-3. Work with tools 
-4. Share your MCP Server with others  
+3. Automate Tasks with MCP 
 
 **Outcomes:**
-Build an advanced MCP server that helps AI assistants with research and learning:
+Build an advanced MCP server that helps you keep up with the latest AI Research:
 - Create an AI/ML research paper discovery service
 - Implement tools for finding trending papers and breakthroughs
 - Build personalized study plan generation capabilities
-- Handle async web scraping and API integrations
 - Create intelligent content summarization and ranking
+- Send daily AI Research Learning note to Slack or Teams 
 
 **What you'll build**:
 - `search_research_papers()` - Find latest AI/ML research by topic
@@ -80,6 +79,7 @@ Build an advanced MCP server that helps AI assistants with research and learning
 - `create_study_plan()` - Generate personalized learning roadmaps
 - `summarize_paper()` - Create digestible summaries of complex research
 - `track_learning_progress()` - Monitor study achievements and goals
+- `send_research_learning()` - Send study daily study note to the user 
 
 **Continue to**: [Part 3: AI Research Learning Hub →](part3-ai-research-server-python.md)
 
