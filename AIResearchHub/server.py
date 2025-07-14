@@ -1,194 +1,230 @@
 import json
-from typing import Any
 
 from mcp.server.fastmcp import FastMCP
-from mcp.types import ToolAnnotations
 from paper_manager import PaperManager
 
-mcp = FastMCP("AI Research Learning Hub")
-
+# Initialize MCP server and paper manager
+mcp = FastMCP("AI Research Hub")
 paper_manager = PaperManager()
 
-@mcp.tool(
-    description="Save papers from Hugging Face search results to local CSV database",
-    annotations=ToolAnnotations(title="Save Papers to Database"),
-)
-async def save_papers_to_database(papers_data: list[dict[str, Any]]) -> dict[str, Any]:
-    """Save papers from Hugging Face MCP search results to local CSV database."""
-    
-    try:
-        if not papers_data:
-            return {
-                "success": False,
-                "message": "No papers data provided"
-            }
-        
-        added_count = paper_manager.add_papers_from_huggingface(papers_data)
-        stats = paper_manager.get_paper_stats()
-        
-        return {
-            "success": True,
-            "papers_provided": len(papers_data),
-            "papers_saved": added_count,
-            "papers_skipped": len(papers_data) - added_count,
-            "database_stats": stats,
-            "csv_location": str(paper_manager.csv_file),
-            "summary": f"Successfully saved {added_count} papers to local database. "
-                      f"Skipped {len(papers_data) - added_count} duplicates or invalid papers."
-        }
-        
-    except Exception as e:
-        return {
-            "success": False,
-            "error": str(e),
-            "message": f"Error saving papers: {str(e)}"
-        }
-
-@mcp.tool(
-    description="Search local CSV database of research papers",
-    annotations=ToolAnnotations(title="Local Paper Search"),
-)
-async def search_local_papers(query: str) -> dict[str, Any]:
-    """Search the local CSV database for research papers."""
-    
-    try:
-        papers = paper_manager.search_local_papers(query)
-        stats = paper_manager.get_paper_stats()
-        
-        return {
-            "success": True,
-            "query": query,
-            "results_count": len(papers),
-            "papers": papers[:5], 
-            "database_stats": stats,
-            "summary": f"Found {len(papers)} papers matching '{query}'"
-        }
-        
-    except Exception as e:
-        return {
-            "success": False,
-            "error": str(e),
-            "message": f"Error searching papers: {str(e)}"
-        }
-
-@mcp.tool(
-    description="Find GitHub repositories that implement a research paper using GitHub MCP",
-    annotations=ToolAnnotations(title="Find Implementations"),
-)
-async def find_code_implementations_of_papers(
-    query: str, language: str | None = None
-) -> dict[str, Any]:
+@mcp.tool(description="Start researching a topic and get research ID")
+async def research_topic(topic: str) -> dict:
     """
-    Find GitHub repositories that implement or reference a research paper
-    by using the configured GitHub MCP server to search repositories and code.
+    Create a new research entry for tracking papers and implementations
+    
+    Args:
+        topic: Research topic to investigate
+        
+    Returns:
+        Research entry details with tracking ID
     """
-    try:
-        # Construct optimized search queries
-        repo_query = f'"{query}"'
-        if language:
-            repo_query += f" language:{language}"
-        repo_query += " stars:>5"  # Filter for repos with some activity
-        
-        code_query = f'"{query}" transformer attention'
-        if language:
-            code_query += f" language:{language}"
-        
-        # Prepare the response with GitHub MCP integration info
-        response = {
-            "success": True,
-            "query": query,
-            "language_filter": language,
-            "github_mcp_status": "configured",
-            "search_strategy": {
-                "repository_search": {
-                    "query": repo_query,
-                    "purpose": "Find repositories implementing the research"
-                },
-                "code_search": {
-                    "query": code_query,
-                    "purpose": "Find specific code implementations"
-                }
-            },
-            "recommended_github_tools": [
-                {
-                    "tool": "mcp_github_search_repositories",
-                    "query": repo_query,
-                    "description": "Search for repositories by name and description"
-                },
-                {
-                    "tool": "mcp_github_search_code", 
-                    "query": code_query,
-                    "description": "Search for code implementations within repositories"
-                }
-            ],
-            "next_steps": [
-                f"1. Use mcp_github_search_repositories with query: {repo_query}",
-                f"2. Use mcp_github_search_code with query: {code_query}",
-                "3. Examine top results for implementation quality",
-                "4. Check repository stars, forks, and recent activity"
-            ],
-            "implementation_hints": [
-                "Look for repositories with 'attention' in the name or description",
-                "Check for PyTorch/TensorFlow implementations",
-                "Prioritize repositories with good documentation",
-                "Consider repositories with recent commits"
-            ]
-        }
-        
-        # Add language-specific suggestions
-        if language:
-            response["language_specific_tips"] = {
-                "python": [
-                    "Look for PyTorch/TensorFlow implementations",
-                    "Check for Jupyter notebooks with examples",
-                    "Search for 'attention_is_all_you_need' repositories"
-                ],
-                "javascript": [
-                    "Look for TensorFlow.js implementations", 
-                    "Check for web-based demos",
-                    "Search for 'transformer-js' repositories"
-                ]
-            }.get(language.lower(), [f"Look for {language}-specific ML libraries"])
-        
-        return response
+    research_entry = paper_manager.add_research_entry(topic)
+    
+    return {
+        "success": True,
+        "topic": topic,
+        "research_id": research_entry["id"],
+        "message": f"Research entry #{research_entry['id']} created for '{topic}'",
+        "total_research_topics": len(paper_manager.load_papers())
+    }
 
-    except Exception as e:
+@mcp.tool(description="Get GitHub search strategies for finding implementations") 
+async def get_github_searches(topic: str) -> dict:
+    """
+    Generate optimized GitHub search commands for finding code implementations
+    
+    Args:
+        topic: Research topic to find implementations for
+        
+    Returns:
+        GitHub search strategies and commands
+    """
+    # Generate targeted search variations
+    searches = [
+        f"{topic} machine learning",
+        f"{topic} python implementation", 
+        f"{topic} pytorch tensorflow",
+        f"{topic} algorithm code"
+    ]
+    
+    return {
+        "success": True,
+        "topic": topic,
+        "github_searches": searches,
+        "commands": [
+            f"Search repos: {topic} stars:>50",
+            f"Search code: {topic} language:python"
+        ],
+        "instructions": "Use GitHub MCP with these search terms to find implementations"
+    }
+
+@mcp.tool(description="Add a paper to a research entry")
+async def add_paper(research_id: int, title: str, authors: str = "", url: str = "") -> dict:
+    """
+    Add a research paper to an existing research entry
+    
+    Args:
+        research_id: ID of the research entry to add to
+        title: Title of the paper
+        authors: Paper authors (optional)
+        url: URL to the paper (optional)
+        
+    Returns:
+        Success status and details
+    """
+    paper_data = {
+        "title": title,
+        "authors": authors,
+        "url": url
+    }
+    
+    paper_manager.add_paper_to_research(research_id, paper_data)
+    
+    return {
+        "success": True,
+        "research_id": research_id,
+        "paper_added": title,
+        "message": f"Paper '{title}' added to research #{research_id}"
+    }
+
+@mcp.tool(description="Add a repository to a research entry")
+async def add_repository(research_id: int, name: str, url: str = "", stars: int = 0) -> dict:
+    """
+    Add a code repository to an existing research entry
+    
+    Args:
+        research_id: ID of the research entry to add to
+        name: Repository name
+        url: Repository URL (optional)
+        stars: Star count (optional)
+        
+    Returns:
+        Success status and details
+    """
+    repo_data = {
+        "name": name,
+        "url": url,
+        "stars": stars
+    }
+    
+    paper_manager.add_repo_to_research(research_id, repo_data)
+    
+    return {
+        "success": True,
+        "research_id": research_id,
+        "repository_added": name,
+        "message": f"Repository '{name}' added to research #{research_id}"
+    }
+
+@mcp.tool(description="Search local research database")
+async def search_research(query: str) -> dict:
+    """
+    Search your local research database for matching content
+    
+    Args:
+        query: Search term to match against research entries
+        
+    Returns:
+        Matching research entries
+    """
+    papers = paper_manager.load_papers()
+    matching_entries = []
+    
+    for entry in papers:
+        if (query.lower() in entry["topic"].lower() or
+            any(query.lower() in paper.get("title", "").lower() 
+                for paper in entry.get("papers_found", [])) or
+            any(query.lower() in repo.get("name", "").lower() 
+                for repo in entry.get("repositories_found", []))):
+            matching_entries.append(entry)
+    
+    return {
+        "success": True,
+        "query": query,
+        "matches_found": len(matching_entries),
+        "entries": matching_entries
+    }
+
+@mcp.tool(description="Update research status and add notes")
+async def update_research_status(research_id: int, status: str, notes: str = "") -> dict:
+    """
+    Update the status of a research entry
+    
+    Args:
+        research_id: ID of the research entry to update
+        status: New status (pending, active, complete, archived)
+        notes: Optional notes about the research progress
+        
+    Returns:
+        Success status and details
+    """
+    valid_statuses = ["pending", "active", "complete", "archived"]
+    if status not in valid_statuses:
         return {
             "success": False,
-            "error": str(e),
-            "message": f"Error preparing GitHub search: {str(e)}",
-            "fallback": "Use GitHub web interface to search manually"
+            "error": f"Invalid status. Must be one of: {', '.join(valid_statuses)}"
         }
+    
+    paper_manager.update_research_status(research_id, status, notes)
+    
+    return {
+        "success": True,
+        "research_id": research_id,
+        "status": status,
+        "notes": notes,
+        "message": f"Research #{research_id} status updated to '{status}'"
+    }
 
-@mcp.resource("research://database/summary")
-def get_database_summary() -> str:
-    """Get a summary of the current state of the research database."""
-    try:
-        summary_data = {
-            "papers": paper_manager.get_paper_stats(),
-        }
-        return json.dumps(summary_data, indent=2)
-    except Exception as e:
-        return json.dumps({"success": False, "error": str(e)}, indent=2)
+@mcp.prompt(name="research_workflow")
+def research_workflow_prompt(topic: str) -> str:
+    """Complete research workflow for any topic"""
+    return f"""Research Topic: {topic}
 
-@mcp.prompt(name="research_sprint")
-def research_sprint_prompt(topic: str) -> str:
-    return (
-        f"Perform a comprehensive research sprint on '{topic}' by following these steps:\n\n"
-        f"1. 📚 Use hf-mcp-server.paper_search to find papers about {topic}\n"
-        f"2. 💾 Use our-research-hub.save_papers_to_database to save the top 3 papers\n"
-        f"3. 🔍 Use our-research-hub.find_implementations to get optimized GitHub search strategies\n"
-        f"4. 🐙 Execute GitHub searches using the configured GitHub MCP server:\n"
-        f"   • mcp_github_search_repositories for repository implementations\n"
-        f"   • mcp_github_search_code for specific code examples\n"
-        f"5.  Summarize findings including:\n"
-        f"   • Paper count and key insights\n"
-        f"   • Top repositories with stars/forks\n"
-        f"   • Implementation quality assessment\n"
-        f"   • Code examples and demos found\n\n"
-        f"💡 Pro tip: The GitHub MCP server in your mcp.json provides direct access to GitHub's API!\n"
-        f"Use find_implementations for comprehensive search guidance."
-    )
+WORKFLOW:
+1. Use: research_topic(topic="{topic}")
+   - Creates tracking entry with research ID
+
+2. Search for papers using HuggingFace MCP tools:
+   - Use: mcp_huggingface_paper_search(query="{topic}")
+   - For each important paper, use: add_paper(research_id, title, authors, url)
+
+3. Use: get_github_searches(topic="{topic}")
+   - Get optimized search strategies for code implementations
+
+4. Search for repositories using GitHub MCP tools:
+   - Use: mcp_github_search_repositories(query="...")
+   - For each important repo, use: add_repository(research_id, name, url, stars)
+
+5. Use: search_research(query="{topic}")
+   - Review your complete research collection
+
+6. Use: update_research_status(research_id, "complete", "Research completed with X papers and Y repositories")
+   - Mark research as complete when finished
+
+7. Check research://status for your research dashboard
+
+GOAL: Build comprehensive knowledge linking papers with implementations
+NOTE: Remember to save findings and update status when complete!
+
+AI RESEARCH HUB TOOLS:
+- research_topic() - Start new research
+- add_paper() - Save paper findings
+- add_repository() - Save repo findings  
+- get_github_searches() - Get search strategies
+- search_research() - Search saved research
+- update_research_status() - Update status
+
+STATUS OPTIONS:
+- "pending": Just started, no findings yet
+- "active": Currently gathering papers/repos (auto-set when adding content)
+- "complete": Research finished with comprehensive findings
+- "archived": Older research for reference"""
+
+@mcp.resource("research://status")
+def research_status() -> str:
+    """Current research status and saved topics"""
+    summary = paper_manager.get_research_summary()
+    return json.dumps(summary, indent=2)
 
 if __name__ == "__main__":
     mcp.run()

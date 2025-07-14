@@ -1,175 +1,110 @@
-import csv
+import json
 from datetime import datetime
 from pathlib import Path
-from typing import Any, cast
-
-import pandas as pd
+from typing import Any
 
 
 class PaperManager:
-    """Manages AI/ML research papers using external MCP servers."""
+    """Simple paper manager that matches the minimal server needs."""
     
     def __init__(self):
+        """Initialize with JSON storage."""
         self.data_dir = Path("data")
         self.data_dir.mkdir(exist_ok=True)
-        self.csv_file = self.data_dir / "research_papers.csv"
-        self._initialize_csv()
+        self.papers_file = self.data_dir / "research_papers.json"
     
-    def _initialize_csv(self):
-        """Initialize CSV file with headers if it doesn't exist."""
-        if not self.csv_file.exists():
-            headers = [
-                'paper_id', 'title', 'authors', 'abstract', 'url', 
-                'published_date', 'research_field', 'keywords', 
-                'downloads', 'likes', 'added_date'
-            ]
-            with open(self.csv_file, 'w', newline='', encoding='utf-8') as f:
-                writer = csv.writer(f)
-                writer.writerow(headers)
+    def load_papers(self) -> list[dict]:
+        """Load papers from JSON file."""
+        if self.papers_file.exists():
+            return json.loads(self.papers_file.read_text())
+        return []
     
-    def add_papers_from_huggingface(self, papers_data: list[dict[str, Any]]) -> int:
-        """Add papers from Hugging Face search to local CSV database."""
-        if not papers_data:
-            return 0
-            
-        # Get existing paper IDs to avoid duplicates
-        existing_papers = set()
-        df = self.get_papers_dataframe()
-        if not df.empty:
-            existing_papers = set(df['paper_id'].astype(str))
-        
-        added_count = 0
-        
-        with open(self.csv_file, 'a', newline='', encoding='utf-8') as f:
-            writer = csv.writer(f)
-            
-            for paper in papers_data:
-                # Validate required fields
-                if not paper.get('id') or not paper.get('title'):
-                    continue
-                    
-                paper_id = str(paper.get('id', ''))
-                
-                # Skip if paper already exists
-                if paper_id in existing_papers:
-                    continue
-                
-                # Handle authors properly - could be list of dicts or strings
-                authors = paper.get('authors', [])
-                if isinstance(authors, list):
-                    if authors and isinstance(authors[0], dict):
-                        author_names = [author.get('name', '') for author in authors]
-                    else:
-                        author_names = [str(author) for author in authors]
-                    authors_str = ', '.join(filter(None, author_names))
-                else:
-                    authors_str = str(authors)
-                
-                # Handle keywords properly
-                keywords = paper.get('keywords', [])
-                if isinstance(keywords, list):
-                    keywords_str = ', '.join(filter(None, [str(k) for k in keywords]))
-                else:
-                    keywords_str = str(keywords)
-                
-                paper_row = [
-                    paper_id,
-                    paper.get('title', ''),
-                    authors_str,
-                    paper.get('abstract', ''),
-                    paper.get('url', ''),
-                    paper.get('published_date', ''),
-                    paper.get('research_field', 'machine_learning'),
-                    keywords_str,
-                    int(paper.get('downloads', 0)),
-                    int(paper.get('likes', 0)),
-                    datetime.now().isoformat()
-                ]
-                
-                writer.writerow(paper_row)
-                existing_papers.add(paper_id)  # Add to set to prevent duplicates in same batch
-                added_count += 1
-        
-        return added_count
+    def save_papers(self, papers: list[dict]):
+        """Save papers to JSON file."""
+        self.papers_file.write_text(json.dumps(papers, indent=2))
     
-    def get_papers_dataframe(self) -> pd.DataFrame:
-        """Get all papers as a pandas DataFrame."""
-        if self.csv_file.exists():
-            return pd.read_csv(self.csv_file)
-        return pd.DataFrame()
+    def add_research_entry(self, topic: str) -> dict[str, Any]:
+        """Add a new research entry for a topic."""
+        papers = self.load_papers()
+        
+        research_entry = {
+            "id": len(papers) + 1,
+            "topic": topic,
+            "created": datetime.now().isoformat(),
+            "status": "pending",
+            "papers_found": [],
+            "repositories_found": [],
+            "notes": ""
+        }
+        
+        papers.append(research_entry)
+        self.save_papers(papers)
+        
+        return research_entry
     
-    def search_local_papers(self, query: str) -> list[dict[str, Any]]:
-        """Search local CSV database for papers."""
-        df = self.get_papers_dataframe()
-        if df.empty:
-            return []
+    def add_paper_to_research(self, research_id: int, paper_data: dict):
+        """Add a paper to an existing research entry."""
+        papers = self.load_papers()
         
-        # Convert query to lowercase for case-insensitive search
-        query_lower = query.lower()
+        for entry in papers:
+            if entry["id"] == research_id:
+                entry["papers_found"].append({
+                    "title": paper_data.get("title", ""),
+                    "authors": paper_data.get("authors", ""),
+                    "url": paper_data.get("url", ""),
+                    "added": datetime.now().isoformat()
+                })
+                entry["status"] = "active"
+                break
         
-        # Simple text search in title, abstract, and keywords
-        mask = (
-            df['title'].str.lower().str.contains(query_lower, case=False, na=False) |
-            df['abstract'].str.lower().str.contains(query_lower, case=False, na=False) |
-            df['keywords'].str.lower().str.contains(query_lower, case=False, na=False) |
-            df['authors'].str.lower().str.contains(query_lower, case=False, na=False)
-        )
-        
-        matching_papers = df[mask]
-        
-        # Sort by most recent first, then by likes
-        if not matching_papers.empty:
-            matching_papers = matching_papers.sort_values(
-                ['published_date', 'likes'], 
-                ascending=[False, False]
-            )
-        
-        return cast(list[dict[str, Any]], matching_papers.to_dict('records'))
+        self.save_papers(papers)
     
-    def get_paper_stats(self) -> dict[str, Any]:
-        """Get statistics about the local paper database."""
-        df = self.get_papers_dataframe()
-        if df.empty:
-            return {"total_papers": 0}
+    def add_repo_to_research(self, research_id: int, repo_data: dict):
+        """Add a repository to an existing research entry."""
+        papers = self.load_papers()
+        
+        for entry in papers:
+            if entry["id"] == research_id:
+                entry["repositories_found"].append({
+                    "name": repo_data.get("name", ""),
+                    "url": repo_data.get("url", ""),
+                    "stars": repo_data.get("stars", 0),
+                    "added": datetime.now().isoformat()
+                })
+                entry["status"] = "active"
+                break
+        
+        self.save_papers(papers)
+    
+    def get_research_summary(self) -> dict[str, Any]:
+        """Get summary of all research activities."""
+        papers = self.load_papers()
+        
+        if not papers:
+            return {"total_research": 0, "entries": []}
+        
+        status_counts = {}
+        for entry in papers:
+            status = entry.get("status", "pending")
+            status_counts[status] = status_counts.get(status, 0) + 1
         
         return {
-            "total_papers": len(df),
-            "research_fields": df['research_field'].value_counts().to_dict(),
-            "most_recent_paper": df['published_date'].max() if 'published_date' in df.columns else None,
-            "most_liked_paper": df.loc[df['likes'].idxmax(
-                ), 'title'] if 'likes' in df.columns and not df.empty else None,
-            "database_last_updated": df['added_date'].max() if 'added_date' in df.columns else None
+            "total_research": len(papers),
+            "status_breakdown": status_counts,
+            "entries": papers,
+            "last_updated": datetime.now().isoformat()
         }
     
-    def get_paper_by_id(self, paper_id: str) -> dict[str, Any] | None:
-        """Get a specific paper by its ID."""
-        df = self.get_papers_dataframe()
-        if df.empty:
-            return None
+    def update_research_status(self, research_id: int, status: str, notes: str = ""):
+        """Update the status of a research entry."""
+        papers = self.load_papers()
         
-        matching_papers = df[df['paper_id'].astype(str) == str(paper_id)]
-        if matching_papers.empty:
-            return None
+        for entry in papers:
+            if entry["id"] == research_id:
+                entry["status"] = status
+                if notes:
+                    entry["notes"] = notes
+                entry["last_updated"] = datetime.now().isoformat()
+                break
         
-        return cast(dict[str, Any], matching_papers.iloc[0].to_dict())
-    
-    def paper_exists(self, paper_id: str) -> bool:
-        """Check if a paper already exists in the database."""
-        return self.get_paper_by_id(paper_id) is not None
-    
-    def remove_paper(self, paper_id: str) -> bool:
-        """Remove a paper from the database."""
-        df = self.get_papers_dataframe()
-        if df.empty:
-            return False
-        
-        # Filter out the paper to remove
-        df_filtered = df[df['paper_id'].astype(str) != str(paper_id)]
-        
-        # Check if anything was actually removed
-        if len(df_filtered) == len(df):
-            return False
-        
-        # Write back to CSV
-        df_filtered.to_csv(self.csv_file, index=False)
-        return True
+        self.save_papers(papers)
