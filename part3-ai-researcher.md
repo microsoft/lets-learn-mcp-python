@@ -23,7 +23,7 @@ Your completed project will have this structure:
 ```text
 AIResearchHub/
 ├── server.py                    # Main MCP server implementation
-├── simple_paper_manager.py     # JSON-based data management
+├── paper_manager.py             # JSON-based data management
 └── data/
     └── research_papers.json    # Local research database
 ```
@@ -68,17 +68,17 @@ Create `.vscode/mcp.json` to enable the MCP servers you'll need:
 
 > **Important**: Replace `YOUR_HUGGING_FACE_BEARER_TOKEN` with your actual Hugging Face token for full functionality.
 
-## Building the Simple Paper Management System
+## Building the Paper Management System
 
-### Simple Paper Manager (`simple_paper_manager.py`)
+### Paper Manager (`paper_manager.py`)
 
 The paper manager provides a clean interface for managing research data using JSON storage:
 
 #### Core Architecture
 
 ```python
-class SimplePaperManager:
-    """Simple paper manager that handles research tracking and data storage."""
+class PaperManager:
+    """Paper manager that handles research tracking and data storage."""
     
     def __init__(self):
         self.data_dir = Path("data")
@@ -102,11 +102,12 @@ class SimplePaperManager:
 
 - **JSON Storage**: Human-readable data format that's easy to inspect and modify
 - **Research Entries**: Structured tracking of research topics with unique IDs
-- **Extensible Design**: Ready to add papers and repositories when found through external searches
-- **Status Tracking**: Monitor research progress from pending to active
-- **Future-Ready Methods**: Includes `add_paper_to_research()` and `add_repo_to_research()` for later integration
+- **Paper and Repository Management**: Add papers and repositories to research entries with timestamps
+- **Status Tracking**: Monitor research progress from pending to active to complete
+- **Search Functionality**: Search across research entries, papers, and repositories
+- **Complete CRUD Operations**: Full create, read, update functionality for research management
 
-> **📁 Full Implementation**: See `AIResearchHub/simple_paper_manager.py` for the complete implementation with all methods.
+> **📁 Full Implementation**: See `AIResearchHub/paper_manager.py` for the complete implementation with all methods.
 
 ## MCP Server Implementation
 
@@ -117,24 +118,25 @@ The server demonstrates how to create complementary tools that work together in 
 #### Server Architecture
 
 ```python
-from mcp.server.fastmcp import FastMCP
-from simple_paper_manager import SimplePaperManager
+from fastmcp import FastMCP
+from paper_manager import PaperManager
 
-mcp = FastMCP("Simple Research Hub")
-paper_manager = SimplePaperManager()
+mcp = FastMCP("AI Research Hub")
+paper_manager = PaperManager()
 ```
 
-#### Core Tools: Complementary Design
+#### Core Tools: Complete Research Management
 
 **Tool 1: Research Entry Creation**
 
 ```python
-@mcp.tool(description="Search papers and repositories for a research topic")
+@mcp.tool(description="Start researching a topic and get research ID")
 async def research_topic(topic: str) -> dict:
     """Create research entry and provide research ID."""
 ```
 
 This tool:
+
 - Creates a structured research entry in the local database
 - Returns a unique research ID for tracking
 - Reports the total number of research topics
@@ -143,16 +145,49 @@ This tool:
 **Tool 2: GitHub Search Strategy**
 
 ```python
-@mcp.tool(description="Get GitHub search commands for finding implementations")
+@mcp.tool(description="Get GitHub search strategies for finding implementations")
 async def get_github_searches(topic: str) -> dict:
     """Generate GitHub search strategies for finding code implementations."""
 ```
 
 This tool:
+
 - Generates multiple targeted search variations
 - Provides specific GitHub MCP commands with quality filters
 - Includes star count filters and language specifications
 - Returns actionable search strategies
+
+**Tool 3: Paper Management**
+
+```python
+@mcp.tool(description="Add a paper to a research entry")
+async def add_paper(research_id: int, title: str, authors: str = "", url: str = "") -> dict:
+    """Add a research paper to an existing research entry."""
+```
+
+**Tool 4: Repository Management**
+
+```python
+@mcp.tool(description="Add a repository to a research entry")
+async def add_repository(research_id: int, name: str, url: str = "", stars: int = 0) -> dict:
+    """Add a code repository to an existing research entry."""
+```
+
+**Tool 5: Research Search**
+
+```python
+@mcp.tool(description="Search local research database")
+async def search_research(query: str) -> dict:
+    """Search your local research database for matching content."""
+```
+
+**Tool 6: Status Management**
+
+```python
+@mcp.tool(description="Update research status and add notes")
+async def update_research_status(research_id: int, status: str, notes: str = "") -> dict:
+    """Update the status of a research entry."""
+```
 
 #### Guided Research Workflow
 
@@ -165,7 +200,8 @@ def research_workflow_prompt(topic: str) -> str:
 ```
 
 The workflow provides:
-1. Step-by-step instructions using both tools
+
+1. Step-by-step instructions using all tools
 2. Integration points with external MCP servers
 3. Clear guidance for organizing findings
 4. Focus areas for analysis and summary
@@ -175,12 +211,13 @@ The workflow provides:
 **Comprehensive Status Resource**:
 
 ```python
-@mcp.resource("research://status")
+@mcp.resource("status://dashboard")
 def research_status() -> str:
     """Current research status and saved topics."""
 ```
 
 Provides:
+
 - Complete research activity overview
 - Active vs pending research counts
 - Detailed entries with timestamps
@@ -194,8 +231,12 @@ Your AI Research Hub includes:
 
 - **research_topic** - Create and track research entries with unique IDs
 - **get_github_searches** - Generate optimized GitHub search strategies with quality filters
-- **research_workflow** prompt - Guided workflow using both tools and external MCP servers
-- **research://status** resource - Comprehensive research dashboard and statistics
+- **add_paper** - Add research papers to existing research entries
+- **add_repository** - Add code repositories to existing research entries
+- **search_research** - Search your local research database for matching content
+- **update_research_status** - Update research status and add notes
+- **research_workflow** prompt - Guided workflow using all tools and external MCP servers
+- **status://dashboard** resource - Comprehensive research dashboard and statistics
 
 ## Running and Using Your Research Hub
 
@@ -210,7 +251,7 @@ Your AI Research Hub includes:
 
 2. **Connect via IDE**: Restart your development environment to load the new MCP server
 
-3. **Verify Connection**: Confirm the Simple Research Hub appears in your MCP server list
+3. **Verify Connection**: Confirm the AI Research Hub appears in your MCP server list
 
 ## Usage Examples and Workflows
 
@@ -222,20 +263,33 @@ Your AI Research Hub includes:
 **Get GitHub Search Strategies**:
 > "Use get_github_searches to get search strategies for 'neural networks'"
 
+**Add Papers and Repositories**:
+> "Use add_paper to add this paper to research #1: 'Attention Is All You Need' by Vaswani et al."
+
+> "Use add_repository to add this repo to research #1: pytorch/pytorch with 50000 stars"
+
+**Search Your Database**:
+> "Use search_research to find all my research on 'transformers'"
+
+**Update Research Status**:
+> "Use update_research_status to mark research #1 as complete with notes about findings"
+
 **Check Research Status**:
-> "What's in my research log? Show me research://status"
+> "What's in my research log? Show me status://dashboard"
 
 **Follow Complete Workflow**:
 > "Start a research workflow for 'diffusion models'" (uses the research_workflow prompt)
 
 ### Integration with External MCP Servers
 
-The tools prepare you for seamless external server usage:
+The tools work together for seamless external server usage:
 
 1. **Create Research Foundation**: Use `research_topic("your topic")` to establish tracking
 2. **Get Targeted Strategies**: Use `get_github_searches("your topic")` for optimized search commands
 3. **Execute External Searches**: Run HuggingFace and GitHub MCP with provided strategies
-4. **Monitor Progress**: Check `research://status` for your complete research history
+4. **Save Findings**: Use `add_paper()` and `add_repository()` to store discoveries
+5. **Monitor Progress**: Check `status://dashboard` for your complete research history
+6. **Update Status**: Use `update_research_status()` to mark completion and add notes
 
 ### Example Tool Responses
 
@@ -258,16 +312,13 @@ The tools prepare you for seamless external server usage:
   "success": true,
   "topic": "neural networks",
   "github_searches": [
-    "neural networks machine learning",
-    "neural networks python implementation",
-    "neural networks pytorch tensorflow",
-    "neural networks algorithm code"
+    "neural networks implementation",
+    "neural networks python"
   ],
   "commands": [
-    "Search repos: neural networks stars:>50",
-    "Search code: neural networks language:python"
+    "Search repos: neural networks stars:>10"
   ],
-  "instructions": "Use GitHub MCP with these search terms to find implementations"
+  "instructions": "Use GitHub MCP with these search terms"
 }
 ```
 
@@ -357,7 +408,8 @@ Through this project, you've learned:
 - **Resource Design**: Making internal data accessible and useful to AI assistants
 - **Integration Planning**: Preparing for external service integration
 
-**Next Steps**: 
+**Next Steps**:
+
 - Experiment with real external MCP integrations
 - Add more sophisticated data analysis capabilities
 - Explore advanced search and discovery features

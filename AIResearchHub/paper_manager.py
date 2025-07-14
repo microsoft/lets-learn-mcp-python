@@ -16,7 +16,7 @@ class PaperManager:
     def load_papers(self) -> list[dict]:
         """Load papers from JSON file."""
         if self.papers_file.exists():
-            return json.loads(self.papers_file.read_text())
+            return json.loads(self.papers_file.read_text()) 
         return []
     
     def save_papers(self, papers: list[dict]):
@@ -51,10 +51,8 @@ class PaperManager:
                 entry["papers_found"].append({
                     "title": paper_data.get("title", ""),
                     "authors": paper_data.get("authors", ""),
-                    "url": paper_data.get("url", ""),
-                    "added": datetime.now().isoformat()
+                    "url": paper_data.get("url", "")
                 })
-                entry["status"] = "active"
                 break
         
         self.save_papers(papers)
@@ -68,10 +66,8 @@ class PaperManager:
                 entry["repositories_found"].append({
                     "name": repo_data.get("name", ""),
                     "url": repo_data.get("url", ""),
-                    "stars": repo_data.get("stars", 0),
-                    "added": datetime.now().isoformat()
+                    "stars": repo_data.get("stars", 0)
                 })
-                entry["status"] = "active"
                 break
         
         self.save_papers(papers)
@@ -80,17 +76,8 @@ class PaperManager:
         """Get summary of all research activities."""
         papers = self.load_papers()
         
-        if not papers:
-            return {"total_research": 0, "entries": []}
-        
-        status_counts = {}
-        for entry in papers:
-            status = entry.get("status", "pending")
-            status_counts[status] = status_counts.get(status, 0) + 1
-        
         return {
             "total_research": len(papers),
-            "status_breakdown": status_counts,
             "entries": papers,
             "last_updated": datetime.now().isoformat()
         }
@@ -104,7 +91,6 @@ class PaperManager:
                 entry["status"] = status
                 if notes:
                     entry["notes"] = notes
-                entry["last_updated"] = datetime.now().isoformat()
                 break
         
         self.save_papers(papers)

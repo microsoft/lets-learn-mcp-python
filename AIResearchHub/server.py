@@ -1,6 +1,6 @@
 import json
 
-from mcp.server.fastmcp import FastMCP
+from fastmcp import FastMCP
 from paper_manager import PaperManager
 
 # Initialize MCP server and paper manager
@@ -31,7 +31,7 @@ async def research_topic(topic: str) -> dict:
 @mcp.tool(description="Get GitHub search strategies for finding implementations") 
 async def get_github_searches(topic: str) -> dict:
     """
-    Generate optimized GitHub search commands for finding code implementations
+    Generate GitHub search commands for finding code implementations
     
     Args:
         topic: Research topic to find implementations for
@@ -39,23 +39,12 @@ async def get_github_searches(topic: str) -> dict:
     Returns:
         GitHub search strategies and commands
     """
-    # Generate targeted search variations
-    searches = [
-        f"{topic} machine learning",
-        f"{topic} python implementation", 
-        f"{topic} pytorch tensorflow",
-        f"{topic} algorithm code"
-    ]
-    
     return {
         "success": True,
         "topic": topic,
-        "github_searches": searches,
-        "commands": [
-            f"Search repos: {topic} stars:>50",
-            f"Search code: {topic} language:python"
-        ],
-        "instructions": "Use GitHub MCP with these search terms to find implementations"
+        "github_searches": [f"{topic} implementation", f"{topic} python"],
+        "commands": [f"Search repos: {topic} stars:>10"],
+        "instructions": "Use GitHub MCP with these search terms"
     }
 
 @mcp.tool(description="Add a paper to a research entry")
@@ -116,35 +105,6 @@ async def add_repository(research_id: int, name: str, url: str = "", stars: int 
         "message": f"Repository '{name}' added to research #{research_id}"
     }
 
-@mcp.tool(description="Search local research database")
-async def search_research(query: str) -> dict:
-    """
-    Search your local research database for matching content
-    
-    Args:
-        query: Search term to match against research entries
-        
-    Returns:
-        Matching research entries
-    """
-    papers = paper_manager.load_papers()
-    matching_entries = []
-    
-    for entry in papers:
-        if (query.lower() in entry["topic"].lower() or
-            any(query.lower() in paper.get("title", "").lower() 
-                for paper in entry.get("papers_found", [])) or
-            any(query.lower() in repo.get("name", "").lower() 
-                for repo in entry.get("repositories_found", []))):
-            matching_entries.append(entry)
-    
-    return {
-        "success": True,
-        "query": query,
-        "matches_found": len(matching_entries),
-        "entries": matching_entries
-    }
-
 @mcp.tool(description="Update research status and add notes")
 async def update_research_status(research_id: int, status: str, notes: str = "") -> dict:
     """
@@ -152,26 +112,18 @@ async def update_research_status(research_id: int, status: str, notes: str = "")
     
     Args:
         research_id: ID of the research entry to update
-        status: New status (pending, active, complete, archived)
+        status: New status (pending, active, complete)
         notes: Optional notes about the research progress
         
     Returns:
         Success status and details
     """
-    valid_statuses = ["pending", "active", "complete", "archived"]
-    if status not in valid_statuses:
-        return {
-            "success": False,
-            "error": f"Invalid status. Must be one of: {', '.join(valid_statuses)}"
-        }
-    
     paper_manager.update_research_status(research_id, status, notes)
     
     return {
         "success": True,
         "research_id": research_id,
         "status": status,
-        "notes": notes,
         "message": f"Research #{research_id} status updated to '{status}'"
     }
 
@@ -181,46 +133,18 @@ def research_workflow_prompt(topic: str) -> str:
     return f"""Research Topic: {topic}
 
 WORKFLOW:
-1. Use: research_topic(topic="{topic}")
-   - Creates tracking entry with research ID
+1. research_topic(topic="{topic}") - Create research entry
+2. Search HuggingFace papers: mcp_huggingface_paper_search(query="{topic}")
+3. get_github_searches(topic="{topic}") - Get search strategies  
+4. Search GitHub repos: mcp_github_search_repositories(query="{topic}")
+5. Add findings: add_paper() and add_repository()
+6. update_research_status(research_id, "complete") - Mark done
+7. Check research://status for dashboard
 
-2. Search for papers using HuggingFace MCP tools:
-   - Use: mcp_huggingface_paper_search(query="{topic}")
-   - For each important paper, use: add_paper(research_id, title, authors, url)
+TOOLS: research_topic, add_paper, add_repository, get_github_searches, update_research_status
+GOAL: Link papers with implementations"""
 
-3. Use: get_github_searches(topic="{topic}")
-   - Get optimized search strategies for code implementations
-
-4. Search for repositories using GitHub MCP tools:
-   - Use: mcp_github_search_repositories(query="...")
-   - For each important repo, use: add_repository(research_id, name, url, stars)
-
-5. Use: search_research(query="{topic}")
-   - Review your complete research collection
-
-6. Use: update_research_status(research_id, "complete", "Research completed with X papers and Y repositories")
-   - Mark research as complete when finished
-
-7. Check research://status for your research dashboard
-
-GOAL: Build comprehensive knowledge linking papers with implementations
-NOTE: Remember to save findings and update status when complete!
-
-AI RESEARCH HUB TOOLS:
-- research_topic() - Start new research
-- add_paper() - Save paper findings
-- add_repository() - Save repo findings  
-- get_github_searches() - Get search strategies
-- search_research() - Search saved research
-- update_research_status() - Update status
-
-STATUS OPTIONS:
-- "pending": Just started, no findings yet
-- "active": Currently gathering papers/repos (auto-set when adding content)
-- "complete": Research finished with comprehensive findings
-- "archived": Older research for reference"""
-
-@mcp.resource("research://status")
+@mcp.resource("status://dashboard")
 def research_status() -> str:
     """Current research status and saved topics"""
     summary = paper_manager.get_research_summary()
