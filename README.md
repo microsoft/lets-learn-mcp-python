@@ -12,6 +12,7 @@ By the end of this tutorial series, you'll have:
 ## Tutorial Structure
 
 ### [Part 1: Prerequisites and Setup](part1-setup.md)
+
 **⏱️ Time: 15-20 minutes**
 
 Set up your development environment and understand MCP fundamentals:
@@ -59,7 +60,7 @@ Challenge: Create a list comprehension that filters even numbers...
 
 ---
 
-### [Part 3: Building Your Own MCP Server - AI Research Learning Assistant](part3-ai-research-server-python.md)
+### [Part 3: Building Your Own MCP Server - AI Research Learning Hub](part3-ai-researcher.md)
 **⏱️ Time: 20-35 minutes**
 
 **Key Learning Objectives:**
@@ -83,7 +84,7 @@ Build an advanced MCP server that helps you keep up with the latest AI Research:
 - `track_learning_progress()` - Monitor study achievements and goals
 - `send_research_learning()` - Send study daily study note to the user 
 
-**Continue to**: [Part 3: AI Research Learning Hub →](./part3-ai-research.md)
+**Continue to**: [Part 3: AI Research Learning Hub →](./part3-ai-researcher.md)
 
 ---
 
@@ -94,8 +95,8 @@ If you're ready to dive in immediately:
 1. **Prerequisites**: Ensure you have VS Code, Python 3.12+, Docker and Python extension installed
 2. **Choose your path**:
    - 🆕 **Need help getting set up?** Start with [Part 1: Setup](part1-setup.md)
-   - � **Want to learn Python with MCP?** Jump to [Part 2: Python Study Buddy](part2-study-buddy.md)
-   - 🧠 **Ready to build AI research tools?** Go to [Part 3: AI Research Server](part3-ai-research-server.md)
+   - 🐍 **Want to learn Python with MCP?** Jump to [Part 2: Python Study Buddy](part2-study-buddy.md)
+   - 🧠 **Ready to build AI research tools?** Go to [Part 3: AI Research Hub](part3-ai-researcher.md)
 
 ## Repository Structure
 
@@ -104,7 +105,7 @@ letslearnmcp-python/
 ├── README.md                        # This overview
 ├── part1-setup.md                   # Prerequisites and environment setup
 ├── part2-study-buddy.md             # Building Python learning companion
-└── part3-ai-research-server.md      # Creating AI research discovery server
+└── part3-ai-researcher.md           # Creating AI research discovery server
 ```
 
 ## Additional Resources
