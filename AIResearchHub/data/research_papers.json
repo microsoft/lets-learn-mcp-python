@@ -1,0 +1,58 @@
+[
+  {
+    "id": 1,
+    "topic": "few shot learning",
+    "created": "2025-07-14T14:50:54.749520",
+    "status": "complete",
+    "papers_found": [
+      {
+        "title": "EASY: Ensemble Augmented-Shot Y-shaped Learning: State-Of-The-Art Few-Shot Classification with Simple Ingredients",
+        "authors": "Yassir Bendou, Yuqing Hu, Raphael Lafargue, Giulia Lioi, Bastien Pasdeloup, St\u00e9phane Pateux, Vincent Gripon",
+        "url": "https://hf.co/papers/2201.09699"
+      },
+      {
+        "title": "Few-shot Learning with Multilingual Language Models",
+        "authors": "Xi Victoria Lin, Todor Mihaylov, Mikel Artetxe, Tianlu Wang, Shuohui Chen, Daniel Simig, Myle Ott, Naman Goyal",
+        "url": "https://hf.co/papers/2112.10668"
+      },
+      {
+        "title": "Enhancing Environmental Robustness in Few-shot Learning via Conditional Representation Learning",
+        "authors": "Qianyu Guo, Jingrong Wu, Tianxing Wu, Haofen Wang, Weifeng Ge, Wenqiang Zhang",
+        "url": "https://hf.co/papers/2502.01183"
+      },
+      {
+        "title": "Pushing the Limits of Simple Pipelines for Few-Shot Learning: External Data and Fine-Tuning Make a Difference",
+        "authors": "Shell Xu Hu, Da Li, Jan St\u00fchmer, Minyoung Kim, Timothy M. Hospedales",
+        "url": "https://hf.co/papers/2204.07305"
+      }
+    ],
+    "repositories_found": [
+      {
+        "name": "oscarknagg/few-shot",
+        "url": "https://github.com/oscarknagg/few-shot",
+        "stars": 1259
+      },
+      {
+        "name": "sicara/easy-few-shot-learning",
+        "url": "https://github.com/sicara/easy-few-shot-learning",
+        "stars": 1225
+      },
+      {
+        "name": "RL-VIG/LibFewShot",
+        "url": "https://github.com/RL-VIG/LibFewShot",
+        "stars": 1028
+      },
+      {
+        "name": "huggingface/setfit",
+        "url": "https://github.com/huggingface/setfit",
+        "stars": 2522
+      },
+      {
+        "name": "tata1661/FSL-Mate",
+        "url": "https://github.com/tata1661/FSL-Mate",
+        "stars": 1746
+      }
+    ],
+    "notes": "Comprehensive research completed on few-shot learning. Found key papers covering state-of-the-art methods, environmental robustness, multilingual approaches, and simple pipeline improvements. Identified practical implementations including comprehensive libraries (LibFewShot, FSL-Mate), ready-to-use frameworks (SetFit by HuggingFace), and tutorial-focused repositories (easy-few-shot-learning). The research spans both theoretical advances and practical implementation resources."
+  }
+]
