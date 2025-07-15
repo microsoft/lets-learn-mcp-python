@@ -2,599 +2,63 @@
 
 > **Navigation**: [← Part 2: Python Study Buddy](part2-study-buddy.md) | [Back to Overview](README.md)
 
-> **Based on**: [AIResearchLearningMCP Repository](https://github.com/jamesmontemagno/AIResearchLearningMCP)
-
 ## Overview
-Learn to build a practical MCP server that demonstrates three key MCP concepts: using external MCP servers, adding resources, and automating tasks. You'll create a research learning hub that finds AI/ML papers using Hugging Face MCP, stores them as resources, and automatically sends study notes to GitHub.
+
+In this part, you'll build an AI Research Learning Hub that demonstrates core MCP server capabilities through a clean, minimal implementation. This project showcases how to create tools that work together, manage simple data storage, and prepare for integration with external MCP servers.
 
 ## Key Learning Objectives
-1. **Find and Use External MCP Servers** - Use Hugging Face MCP Server to get AI/ML papers and create a local CSV database
-2. **Add Resources with MCP** - Add the ML papers as data resources that AI assistants can access
-3. **Automate Tasks with MCP** - Use the GitHub MCP server to send study notes to GitHub for permanent storage
 
-## 3.1 Project Foundation
+1. **MCP Server Architecture** - Design tools that work together in a cohesive workflow
+2. **Simple Data Management** - Use JSON storage for research tracking and organization
+3. **External MCP Integration** - Prepare users for Hugging Face and GitHub MCP server usage
+4. **Workflow Design** - Create guided research processes with multiple complementary tools
+5. **Resource Exposure** - Make internal data accessible to AI assistants
 
-### Create Python project
-
-Create a new folder called **AIResearchHub** and set up your Python project:
-
-```bash
-mkdir AIResearchHub
-cd AIResearchHub
-```
-
-### Virtual Environment Setup
-```bash
-# Create virtual environment
-python -m venv research-env
-
-# Activate on macOS/Linux
-source research-env/bin/activate
-
-# Activate on Windows
-research-env\Scripts\activate
-```
-
-### Package Installation
-Essential packages for this focused MCP server:
-
-```bash
-pip install mcp>=1.9.4
-pip install pandas
-pip install csv
-```
-
-Create a **requirements.txt**:
-```txt
-mcp>=1.9.4
-pandas>=2.0.0
-```
+## Project Setup and Architecture
 
 ### Project Structure
-```bash
-# Create main files
-touch server.py
-touch paper_manager.py
-touch study_notes.py
-```
 
-Create the following directory structure:
-```
+Your completed project will have this structure:
+
+```text
 AIResearchHub/
-├── server.py           # Main MCP server
-├── paper_manager.py    # Paper discovery and CSV management  
-├── study_notes.py      # Study notes management
-├── requirements.txt
+├── server.py                    # Main MCP server implementation
+├── paper_manager.py             # JSON-based data management
 └── data/
-    └── research_papers.csv  # Local CSV database
+    └── research_papers.json    # Local research database
 ```
 
-## 3.2 External MCP Server Integration (Objective 1)
+### Essential Dependencies
 
-### Configure Hugging Face MCP Server
-First, let's set up access to the Hugging Face MCP server in VS Code.
+Create your Python environment and install dependencies:
 
-**Task**: Create `.vscode/mcp.json` to include Hugging Face MCP:
+1. `uv venv` - Create a virtual environment  
+2. `source .venv/bin/activate` - Activate the environment (macOS/Linux) or `.venv\Scripts\activate` (Windows)
+3. `uv sync` - Install required packages from `pyproject.toml`
+
+> **Note**: The project uses `fastmcp>=2.10.5` and `mcp[cli]>=1.9.4` as core dependencies.
+
+### Configure MCP Integration
+
+Create `.vscode/mcp.json` to enable the MCP servers you'll need:
 
 ```json
 {
     "inputs": [],
     "servers": {
         "huggingface": {
-            "type": "sse",
-            "url": "https://huggingface.co/mcp"
-        },
-        "github": {
-            "type": "http", 
-            "url": "https://api.githubcopilot.com/mcp/"
-        },
-        "our-research-hub": {
-            "command": "python",
-            "args": ["-m", "server"],
-            "cwd": "./AIResearchHub",
-            "env": {}
-        }
-    }
-}
-```
-
-### Create Paper Discovery Service
-**Task**: Create `paper_manager.py` that uses Hugging Face MCP to find papers and save to CSV.
-
-```python
-import csv
-import os
-import pandas as pd
-from datetime import datetime
-from pathlib import Path
-from typing import List, Dict, Any
-
-class PaperManager:
-    """Manages AI/ML research papers using external MCP servers."""
-    
-    def __init__(self):
-        self.data_dir = Path("data")
-        self.data_dir.mkdir(exist_ok=True)
-        self.csv_file = self.data_dir / "research_papers.csv"
-        self._initialize_csv()
-    
-    def _initialize_csv(self):
-        """Initialize CSV file with headers if it doesn't exist."""
-        if not self.csv_file.exists():
-            headers = [
-                'paper_id', 'title', 'authors', 'abstract', 'url', 
-                'published_date', 'research_field', 'keywords', 
-                'downloads', 'likes', 'added_date'
-            ]
-            with open(self.csv_file, 'w', newline='', encoding='utf-8') as f:
-                writer = csv.writer(f)
-                writer.writerow(headers)
-    
-    def add_papers_from_huggingface(self, papers_data: List[Dict[str, Any]]) -> int:
-        """Add papers from Hugging Face search to local CSV database."""
-        added_count = 0
-        
-        with open(self.csv_file, 'a', newline='', encoding='utf-8') as f:
-            writer = csv.writer(f)
-            
-            for paper in papers_data:
-                # Extract paper information
-                paper_row = [
-                    paper.get('id', ''),
-                    paper.get('title', ''),
-                    ', '.join([author.get('name', '') for author in paper.get('authors', [])]),
-                    paper.get('abstract', ''),
-                    paper.get('url', ''),
-                    paper.get('published_date', ''),
-                    paper.get('research_field', 'machine_learning'),
-                    ', '.join(paper.get('keywords', [])),
-                    paper.get('downloads', 0),
-                    paper.get('likes', 0),
-                    datetime.now().isoformat()
-                ]
-                
-                writer.writerow(paper_row)
-                added_count += 1
-        
-        return added_count
-    
-    def get_papers_dataframe(self) -> pd.DataFrame:
-        """Get all papers as a pandas DataFrame."""
-        if self.csv_file.exists():
-            return pd.read_csv(self.csv_file)
-        return pd.DataFrame()
-    
-    def search_local_papers(self, query: str) -> List[Dict[str, Any]]:
-        """Search local CSV database for papers."""
-        df = self.get_papers_dataframe()
-        if df.empty:
-            return []
-        
-        # Simple text search in title and abstract
-        mask = (
-            df['title'].str.contains(query, case=False, na=False) |
-            df['abstract'].str.contains(query, case=False, na=False) |
-            df['keywords'].str.contains(query, case=False, na=False)
-        )
-        
-        matching_papers = df[mask]
-        return matching_papers.to_dict('records')
-    
-    def get_paper_stats(self) -> Dict[str, Any]:
-        """Get statistics about the local paper database."""
-        df = self.get_papers_dataframe()
-        if df.empty:
-            return {"total_papers": 0}
-        
-        return {
-            "total_papers": len(df),
-            "research_fields": df['research_field'].value_counts().to_dict(),
-            "most_recent_paper": df['published_date'].max() if 'published_date' in df.columns else None,
-            "most_liked_paper": df.loc[df['likes'].idxmax(), 'title'] if 'likes' in df.columns and not df.empty else None,
-            "database_last_updated": df['added_date'].max() if 'added_date' in df.columns else None
-        }
-```
-
-## 3.3 MCP Resources Implementation (Objective 2)
-
-### Create Study Notes Manager
-**Task**: Create `study_notes.py` for managing study notes that will be sent to GitHub.
-
-```python
-import json
-import os
-from datetime import datetime
-from pathlib import Path
-from typing import List, Dict, Any
-
-class StudyNotesManager:
-    """Manages study notes for AI/ML research papers."""
-    
-    def __init__(self):
-        self.data_dir = Path("data")
-        self.notes_file = self.data_dir / "study_notes.json"
-        self.notes_data = self._load_notes()
-    
-    def _load_notes(self) -> Dict[str, Any]:
-        """Load study notes from file."""
-        if self.notes_file.exists():
-            with open(self.notes_file, 'r', encoding='utf-8') as f:
-                return json.load(f)
-        return {"notes": [], "last_updated": None}
-    
-    def _save_notes(self):
-        """Save study notes to file."""
-        self.notes_data["last_updated"] = datetime.now().isoformat()
-        with open(self.notes_file, 'w', encoding='utf-8') as f:
-            json.dump(self.notes_data, f, indent=2, ensure_ascii=False)
-    
-    def add_study_note(self, paper_title: str, note_content: str, note_type: str = "summary") -> str:
-        """Add a study note for a research paper."""
-        note_id = f"note_{len(self.notes_data['notes']) + 1}_{int(datetime.now().timestamp())}"
-        
-        note = {
-            "id": note_id,
-            "paper_title": paper_title,
-            "note_type": note_type,  # summary, insight, question, implementation
-            "content": note_content,
-            "created_date": datetime.now().isoformat(),
-            "tags": self._extract_tags(note_content)
-        }
-        
-        self.notes_data["notes"].append(note)
-        self._save_notes()
-        return note_id
-    
-    def get_notes_for_paper(self, paper_title: str) -> List[Dict[str, Any]]:
-        """Get all notes for a specific paper."""
-        return [note for note in self.notes_data["notes"] if note["paper_title"] == paper_title]
-    
-    def get_all_notes(self) -> List[Dict[str, Any]]:
-        """Get all study notes."""
-        return self.notes_data["notes"]
-    
-    def generate_github_markdown(self) -> str:
-        """Generate markdown content for GitHub repository."""
-        markdown_content = "# AI/ML Research Study Notes\n\n"
-        markdown_content += f"*Last Updated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}*\n\n"
-        
-        # Group notes by paper
-        papers = {}
-        for note in self.notes_data["notes"]:
-            paper_title = note["paper_title"]
-            if paper_title not in papers:
-                papers[paper_title] = []
-            papers[paper_title].append(note)
-        
-        # Generate markdown for each paper
-        for paper_title, notes in papers.items():
-            markdown_content += f"## {paper_title}\n\n"
-            
-            for note in notes:
-                markdown_content += f"### {note['note_type'].title()} ({note['created_date'][:10]})\n\n"
-                markdown_content += f"{note['content']}\n\n"
-                if note['tags']:
-                    markdown_content += f"**Tags:** {', '.join(note['tags'])}\n\n"
-                markdown_content += "---\n\n"
-        
-        return markdown_content
-    
-    def _extract_tags(self, content: str) -> List[str]:
-        """Extract relevant tags from note content."""
-        # Simple keyword-based tagging
-        keywords = ['transformer', 'attention', 'neural', 'learning', 'deep', 'model', 
-                   'algorithm', 'data', 'training', 'performance', 'architecture']
-        
-        tags = []
-        content_lower = content.lower()
-        for keyword in keywords:
-            if keyword in content_lower:
-                tags.append(keyword)
-        
-        return tags[:5]  # Limit to 5 tags
-```
-
-### Create Main MCP Server
-**Task**: Create `server.py` with focused tools for the three objectives.
-
-```python
-import asyncio
-import csv
-import json
-from datetime import datetime
-from typing import List, Dict, Any, Optional
-
-from mcp.server.fastmcp import FastMCP
-from mcp.types import ToolAnnotations
-
-from paper_manager import PaperManager
-from study_notes import StudyNotesManager
-
-# Initialize the MCP server
-mcp = FastMCP("AI Research Learning Hub")
-
-# Initialize managers
-paper_manager = PaperManager()
-notes_manager = StudyNotesManager()
-
-# Objective 1: Find and Use External MCP Servers
-@mcp.tool(
-    description="Search Hugging Face for AI/ML research papers and save to local CSV database",
-    annotations=ToolAnnotations(title="Paper Discovery via Hugging Face", idempotentHint=False, readOnlyHint=False),
-)
-async def discover_papers_from_huggingface(
-    query: str,
-    limit: int = 10,
-    sort: str = "downloads"
-) -> Dict[str, Any]:
-    """
-    Use Hugging Face MCP server to find AI/ML papers and save them to local CSV database.
-    
-    This tool demonstrates how to use external MCP servers and persist data locally.
-    """
-    
-    try:
-        # Note: In a real implementation, this would call the Hugging Face MCP server
-        # For this demo, we'll simulate the response structure
-        
-        # Simulated Hugging Face paper search results
-        simulated_papers = [
-            {
-                "id": f"hf_paper_{i}",
-                "title": f"Advanced {query.title()} Research Paper {i}",
-                "authors": [{"name": f"Researcher {i}A"}, {"name": f"Researcher {i}B"}],
-                "abstract": f"This paper explores cutting-edge approaches to {query} using novel methodologies and extensive experimentation.",
-                "url": f"https://huggingface.co/papers/example_{i}",
-                "published_date": f"2024-0{min(i+1, 9)}-15",
-                "research_field": "machine_learning",
-                "keywords": [query, "AI", "research", "neural networks"],
-                "downloads": 1000 + (i * 100),
-                "likes": 50 + (i * 10)
+            "url": "https://huggingface.co/mcp",
+            "headers": {
+                "Authorization": "Bearer YOUR_HUGGING_FACE_BEARER_TOKEN"
             }
-            for i in range(limit)
-        ]
-        
-        # Add papers to local CSV database
-        added_count = paper_manager.add_papers_from_huggingface(simulated_papers)
-        
-        # Get database statistics
-        stats = paper_manager.get_paper_stats()
-        
-        return {
-            "success": True,
-            "query": query,
-            "papers_found": len(simulated_papers),
-            "papers_added_to_csv": added_count,
-            "database_stats": stats,
-            "csv_location": str(paper_manager.csv_file),
-            "summary": f"Successfully discovered {len(simulated_papers)} papers on '{query}' from Hugging Face and saved to local CSV database"
-        }
-        
-    except Exception as e:
-        return {
-            "success": False,
-            "error": str(e),
-            "message": f"Error discovering papers from Hugging Face: {str(e)}"
-        }
-
-@mcp.tool(
-    description="Search local CSV database of research papers",
-    annotations=ToolAnnotations(title="Local Paper Search", idempotentHint=True, readOnlyHint=True),
-)
-async def search_local_papers(query: str) -> Dict[str, Any]:
-    """Search the local CSV database for research papers."""
-    
-    try:
-        papers = paper_manager.search_local_papers(query)
-        stats = paper_manager.get_paper_stats()
-        
-        return {
-            "success": True,
-            "query": query,
-            "results_count": len(papers),
-            "papers": papers[:10],  # Limit to first 10 results
-            "database_stats": stats,
-            "summary": f"Found {len(papers)} papers matching '{query}' in local database"
-        }
-        
-    except Exception as e:
-        return {
-            "success": False,
-            "error": str(e),
-            "message": f"Error searching local papers: {str(e)}"
-        }
-
-# Objective 2: Add Resources with MCP
-@mcp.resource("research://papers/database")
-def get_papers_database() -> str:
-    """Get the complete research papers database as a CSV resource."""
-    try:
-        df = paper_manager.get_papers_dataframe()
-        if df.empty:
-            return "No papers in database yet. Use discover_papers_from_huggingface to add papers."
-        
-        # Convert DataFrame to CSV string
-        return df.to_csv(index=False)
-        
-    except Exception as e:
-        return f"Error loading papers database: {str(e)}"
-
-@mcp.resource("research://papers/summary")
-def get_papers_summary() -> str:
-    """Get a summary of the research papers database."""
-    try:
-        stats = paper_manager.get_paper_stats()
-        
-        summary = {
-            "database_summary": stats,
-            "available_fields": [
-                "paper_id", "title", "authors", "abstract", "url",
-                "published_date", "research_field", "keywords", 
-                "downloads", "likes", "added_date"
-            ],
-            "usage_instructions": {
-                "search": "Use search_local_papers tool to find specific papers",
-                "discover": "Use discover_papers_from_huggingface to add new papers",
-                "access": "Use research://papers/database resource to get full CSV data"
-            }
-        }
-        
-        return json.dumps(summary, indent=2)
-        
-    except Exception as e:
-        return f"Error generating papers summary: {str(e)}"
-
-@mcp.resource("research://notes/all")
-def get_all_study_notes() -> str:
-    """Get all study notes as a JSON resource."""
-    try:
-        notes = notes_manager.get_all_notes()
-        
-        notes_resource = {
-            "total_notes": len(notes),
-            "notes": notes,
-            "last_updated": notes_manager.notes_data.get("last_updated"),
-            "note_types": list(set(note.get("note_type", "summary") for note in notes))
-        }
-        
-        return json.dumps(notes_resource, indent=2)
-        
-    except Exception as e:
-        return f"Error loading study notes: {str(e)}"
-
-# Objective 3: Automate Tasks with MCP
-@mcp.tool(
-    description="Add a study note for a research paper",
-    annotations=ToolAnnotations(title="Add Study Note", idempotentHint=False, readOnlyHint=False),
-)
-async def add_study_note(
-    paper_title: str,
-    note_content: str,
-    note_type: str = "summary"
-) -> Dict[str, Any]:
-    """Add a study note for a research paper."""
-    
-    try:
-        note_id = notes_manager.add_study_note(paper_title, note_content, note_type)
-        
-        return {
-            "success": True,
-            "note_id": note_id,
-            "paper_title": paper_title,
-            "note_type": note_type,
-            "summary": f"Added {note_type} note for '{paper_title}'"
-        }
-        
-    except Exception as e:
-        return {
-            "success": False,
-            "error": str(e),
-            "message": f"Error adding study note: {str(e)}"
-        }
-
-@mcp.tool(
-    description="Send study notes to GitHub repository using GitHub MCP server",
-    annotations=ToolAnnotations(title="GitHub Notes Automation", idempotentHint=False, readOnlyHint=False),
-)
-async def send_notes_to_github(
-    repository_name: str,
-    commit_message: str = "Update AI/ML research study notes"
-) -> Dict[str, Any]:
-    """
-    Automate sending study notes to GitHub repository using GitHub MCP server.
-    
-    This tool demonstrates how to automate tasks using external MCP servers.
-    """
-    
-    try:
-        # Generate markdown content from study notes
-        markdown_content = notes_manager.generate_github_markdown()
-        
-        # Note: In a real implementation, this would use the GitHub MCP server
-        # For this demo, we'll simulate the GitHub integration
-        
-        file_info = {
-            "repository": repository_name,
-            "file_path": "study_notes.md",
-            "content_length": len(markdown_content),
-            "commit_message": commit_message,
-            "timestamp": datetime.now().isoformat()
-        }
-        
-        # Simulate successful GitHub operation
-        github_response = {
-            "success": True,
-            "repository": repository_name,
-            "file_created": "study_notes.md",
-            "commit_sha": "abc123def456",  # Simulated commit hash
-            "commit_message": commit_message,
-            "url": f"https://github.com/username/{repository_name}/blob/main/study_notes.md"
-        }
-        
-        return {
-            "success": True,
-            "github_response": github_response,
-            "notes_count": len(notes_manager.get_all_notes()),
-            "markdown_preview": markdown_content[:500] + "..." if len(markdown_content) > 500 else markdown_content,
-            "automation_summary": f"Successfully sent {len(notes_manager.get_all_notes())} study notes to GitHub repository '{repository_name}'"
-        }
-        
-    except Exception as e:
-        return {
-            "success": False,
-            "error": str(e),
-            "message": f"Error sending notes to GitHub: {str(e)}"
-        }
-
-@mcp.tool(
-    description="Get study notes for a specific paper",
-    annotations=ToolAnnotations(title="Get Paper Notes", idempotentHint=True, readOnlyHint=True),
-)
-async def get_paper_notes(paper_title: str) -> Dict[str, Any]:
-    """Get all study notes for a specific research paper."""
-    
-    try:
-        notes = notes_manager.get_notes_for_paper(paper_title)
-        
-        return {
-            "success": True,
-            "paper_title": paper_title,
-            "notes_count": len(notes),
-            "notes": notes,
-            "summary": f"Found {len(notes)} notes for '{paper_title}'"
-        }
-        
-    except Exception as e:
-        return {
-            "success": False,
-            "error": str(e),
-            "message": f"Error getting paper notes: {str(e)}"
-        }
-
-if __name__ == "__main__":
-    mcp.run()
-```
-
-## 3.4 Testing Your MCP Server
-
-### Configure VS Code
-Update your `.vscode/mcp.json` to include all three servers:
-
-```json
-{
-    "inputs": [],
-    "servers": {
-        "huggingface": {
-            "type": "sse",
-            "url": "https://huggingface.co/mcp"
         },
         "github": {
             "type": "http", 
             "url": "https://api.githubcopilot.com/mcp/"
         },
         "ai-research-hub": {
-            "command": "python",
-            "args": ["-m", "server"],
+            "command": "uv",
+            "args": ["run", "python", "-m", "server"],
             "cwd": "./AIResearchHub",
             "env": {}
         }
@@ -602,85 +66,353 @@ Update your `.vscode/mcp.json` to include all three servers:
 }
 ```
 
-### Test the Three Objectives
+> **Important**: Replace `YOUR_HUGGING_FACE_BEARER_TOKEN` with your actual Hugging Face token for full functionality.
 
-**1. Test External MCP Server Integration:**
-```bash
-# Restart VS Code and use Copilot
+## Building the Paper Management System
+
+### Paper Manager (`paper_manager.py`)
+
+The paper manager provides a clean interface for managing research data using JSON storage:
+
+#### Core Architecture
+
+```python
+class PaperManager:
+    """Paper manager that handles research tracking and data storage."""
+    
+    def __init__(self):
+        self.data_dir = Path("data")
+        self.papers_file = self.data_dir / "research_papers.json"
+    
+    def add_research_entry(self, topic: str) -> dict[str, Any]:
+        """Add a new research entry for a topic."""
+        research_entry = {
+            "id": len(papers) + 1,
+            "topic": topic,
+            "created": datetime.now().isoformat(),
+            "status": "pending",
+            "papers_found": [],
+            "repositories_found": [],
+            "notes": ""
+        }
+        return research_entry
 ```
-> "Search Hugging Face for recent transformer papers and save them to our local database"
 
-**2. Test MCP Resources:**
-> "Show me the research papers database summary"
-> "Get all study notes as a resource"
+#### Key Features
 
-**3. Test GitHub Automation:**
-> "Add a study note about attention mechanisms and then send all notes to my GitHub repository"
+- **JSON Storage**: Human-readable data format that's easy to inspect and modify
+- **Research Entries**: Structured tracking of research topics with unique IDs
+- **Paper and Repository Management**: Add papers and repositories to research entries with timestamps
+- **Status Tracking**: Monitor research progress from pending to active to complete
+- **Search Functionality**: Search across research entries, papers, and repositories
+- **Complete CRUD Operations**: Full create, read, update functionality for research management
 
-## 3.5 Practical Exercises
+> **📁 Full Implementation**: See `AIResearchHub/paper_manager.py` for the complete implementation with all methods.
 
-### Exercise 1: Paper Discovery Workflow
-1. Use Copilot to discover papers on "computer vision" from Hugging Face
-2. Search your local database for "vision" papers
-3. Check the database statistics
+## MCP Server Implementation
 
-### Exercise 2: Study Notes Management
-1. Add summary notes for 3 different papers
-2. Add implementation notes for 1 paper
-3. View notes by paper title
+### Main Server (`server.py`)
 
-### Exercise 3: GitHub Integration
-1. Create several study notes
-2. Send them to your GitHub repository
-3. Verify the markdown formatting
+The server demonstrates how to create complementary tools that work together in a research workflow:
 
-## Learning Outcomes
+#### Server Architecture
 
-By completing this tutorial, you've learned:
+```python
+from fastmcp import FastMCP
+from paper_manager import PaperManager
 
-✅ **External MCP Integration**: How to use other MCP servers (Hugging Face) in your own server
-✅ **Resource Management**: How to expose data as MCP resources that AI assistants can access
-✅ **Task Automation**: How to automate workflows by combining multiple MCP servers (GitHub)
-✅ **Data Persistence**: How to store and manage data locally (CSV database)
-✅ **Practical MCP Patterns**: Real-world examples of MCP server integration
+mcp = FastMCP("AI Research Hub")
+paper_manager = PaperManager()
+```
+
+#### Core Tools: Complete Research Management
+
+**Tool 1: Research Entry Creation**
+
+```python
+@mcp.tool(description="Start researching a topic and get research ID")
+async def research_topic(topic: str) -> dict:
+    """Create research entry and provide research ID."""
+```
+
+This tool:
+
+- Creates a structured research entry in the local database
+- Returns a unique research ID for tracking
+- Reports the total number of research topics
+- Focuses solely on what it accomplished
+
+**Tool 2: GitHub Search Strategy**
+
+```python
+@mcp.tool(description="Get GitHub search strategies for finding implementations")
+async def get_github_searches(topic: str) -> dict:
+    """Generate GitHub search strategies for finding code implementations."""
+```
+
+This tool:
+
+- Generates multiple targeted search variations
+- Provides specific GitHub MCP commands with quality filters
+- Includes star count filters and language specifications
+- Returns actionable search strategies
+
+**Tool 3: Paper Management**
+
+```python
+@mcp.tool(description="Add a paper to a research entry")
+async def add_paper(research_id: int, title: str, authors: str = "", url: str = "") -> dict:
+    """Add a research paper to an existing research entry."""
+```
+
+**Tool 4: Repository Management**
+
+```python
+@mcp.tool(description="Add a repository to a research entry")
+async def add_repository(research_id: int, name: str, url: str = "", stars: int = 0) -> dict:
+    """Add a code repository to an existing research entry."""
+```
+
+**Tool 5: Research Search**
+
+```python
+@mcp.tool(description="Search local research database")
+async def search_research(query: str) -> dict:
+    """Search your local research database for matching content."""
+```
+
+**Tool 6: Status Management**
+
+```python
+@mcp.tool(description="Update research status and add notes")
+async def update_research_status(research_id: int, status: str, notes: str = "") -> dict:
+    """Update the status of a research entry."""
+```
+
+#### Guided Research Workflow
+
+**Research Prompt** - Orchestrates the complete workflow:
+
+```python
+@mcp.prompt(name="research_workflow")
+def research_workflow_prompt(topic: str) -> str:
+    """Complete research workflow for any topic."""
+```
+
+The workflow provides:
+
+1. Step-by-step instructions using all tools
+2. Integration points with external MCP servers
+3. Clear guidance for organizing findings
+4. Focus areas for analysis and summary
+
+#### Resource: Research Dashboard
+
+**Comprehensive Status Resource**:
+
+```python
+@mcp.resource("status://dashboard")
+def research_status() -> str:
+    """Current research status and saved topics."""
+```
+
+Provides:
+
+- Complete research activity overview
+- Active vs pending research counts
+- Detailed entries with timestamps
+- Database statistics and health information
+
+> **📁 Full Implementation**: See `AIResearchHub/server.py` for the complete server with all tools, prompts, and resources.
+
+### Complete Tool Set
+
+Your AI Research Hub includes:
+
+- **research_topic** - Create and track research entries with unique IDs
+- **get_github_searches** - Generate optimized GitHub search strategies with quality filters
+- **add_paper** - Add research papers to existing research entries
+- **add_repository** - Add code repositories to existing research entries
+- **search_research** - Search your local research database for matching content
+- **update_research_status** - Update research status and add notes
+- **research_workflow** prompt - Guided workflow using all tools and external MCP servers
+- **status://dashboard** resource - Comprehensive research dashboard and statistics
+
+## Running and Using Your Research Hub
+
+### Starting the Server
+
+1. **Launch the Server**:
+
+   ```bash
+   cd AIResearchHub
+   uv run python -m server
+   ```
+
+2. **Connect via IDE**: Restart your development environment to load the new MCP server
+
+3. **Verify Connection**: Confirm the AI Research Hub appears in your MCP server list
+
+## Usage Examples and Workflows
+
+### Basic Research Operations
+
+**Create Research Entry**:
+> "Use research_topic to start researching 'transformer attention mechanisms'"
+
+**Get GitHub Search Strategies**:
+> "Use get_github_searches to get search strategies for 'neural networks'"
+
+**Add Papers and Repositories**:
+> "Use add_paper to add this paper to research #1: 'Attention Is All You Need' by Vaswani et al."
+
+> "Use add_repository to add this repo to research #1: pytorch/pytorch with 50000 stars"
+
+**Search Your Database**:
+> "Use search_research to find all my research on 'transformers'"
+
+**Update Research Status**:
+> "Use update_research_status to mark research #1 as complete with notes about findings"
+
+**Check Research Status**:
+> "What's in my research log? Show me status://dashboard"
+
+**Follow Complete Workflow**:
+> "Start a research workflow for 'diffusion models'" (uses the research_workflow prompt)
+
+### Integration with External MCP Servers
+
+The tools work together for seamless external server usage:
+
+1. **Create Research Foundation**: Use `research_topic("your topic")` to establish tracking
+2. **Get Targeted Strategies**: Use `get_github_searches("your topic")` for optimized search commands
+3. **Execute External Searches**: Run HuggingFace and GitHub MCP with provided strategies
+4. **Save Findings**: Use `add_paper()` and `add_repository()` to store discoveries
+5. **Monitor Progress**: Check `status://dashboard` for your complete research history
+6. **Update Status**: Use `update_research_status()` to mark completion and add notes
+
+### Example Tool Responses
+
+**research_topic("neural networks") returns:**
+
+```json
+{
+  "success": true,
+  "topic": "neural networks",
+  "research_id": 1,
+  "message": "Research entry #1 created for 'neural networks'",
+  "total_research_topics": 1
+}
+```
+
+**get_github_searches("neural networks") returns:**
+
+```json
+{
+  "success": true,
+  "topic": "neural networks",
+  "github_searches": [
+    "neural networks implementation",
+    "neural networks python"
+  ],
+  "commands": [
+    "Search repos: neural networks stars:>10"
+  ],
+  "instructions": "Use GitHub MCP with these search terms"
+}
+```
+
+## Research Workflows
+
+### Comprehensive Research Process
+
+1. **Initialize Research**: Create entry with topic and get research ID
+2. **Plan GitHub Search**: Generate targeted search strategies with quality filters
+3. **Execute External Searches**: Use HuggingFace MCP for papers, GitHub MCP for code
+4. **Track Progress**: Monitor all research activities through the status resource
+5. **Analyze Findings**: Compare academic papers with practical implementations
+
+### Daily Research Routine
+
+1. **Review Active Research**: Check status resource for ongoing projects
+2. **Start New Topics**: Create entries for emerging research interests
+3. **Execute Searches**: Use external MCP servers with generated strategies
+4. **Update Findings**: Add discovered papers and repositories to research entries
+5. **Synthesize Insights**: Compare theoretical advances with practical implementations
+
+## Key Design Principles
+
+### Tool Architecture
+- **Single Responsibility**: Each tool has one clear, focused purpose
+- **Complementary Functions**: Tools work together to support complete workflows
+- **Clean Separation**: Data management separated from server logic
+- **Extensible Design**: Ready for enhancement without major restructuring
+
+### Data Management
+- **Simple Storage**: JSON format for quick development and easy inspection
+- **Structured Tracking**: Organized research entries with consistent schemas
+- **Status Management**: Clear progression from pending to active research
+- **Future-Ready**: Methods in place for adding papers and repositories
+
+### Integration Strategy
+- **External Preparation**: Tools prepare users for external MCP server usage
+- **Clear Guidance**: Prompts provide actionable workflows
+- **Quality Filters**: Built-in criteria for finding high-quality implementations
+- **Resource Exposure**: Internal data accessible to AI assistants
+
+## Extending Your Research Hub
+
+### Immediate Enhancements
+- **Real MCP Integration**: Replace preparation with actual API calls to external servers
+- **Enhanced Data Models**: Add more detailed paper and repository metadata
+- **Search Functionality**: Implement local search across research entries
+- **Export Capabilities**: Generate reports and summaries from research data
+
+### Advanced Features
+- **Semantic Search**: Embedding-based search for better content discovery
+- **Citation Analysis**: Track relationships and influence between papers
+- **Automated Summarization**: Generate insights from research collections
+- **Collaboration Tools**: Share research with team members and track contributions
+- **Data Visualization**: Create charts and graphs of research trends and progress
+
+### Migration to Production
+
+When scaling up:
+
+1. **Enhanced Storage**: Move from JSON to databases for better performance and querying
+2. **Real-Time Integration**: Direct API integration with HuggingFace and GitHub
+3. **Advanced Tools**: Add specialized search, analysis, and reporting capabilities
+4. **Error Handling**: Implement robust error handling and recovery mechanisms
+5. **Authentication**: Add user management and access controls
+6. **Monitoring**: Implement logging and metrics for system health
 
 ---
 
-> **Congratulations!** You've built a practical MCP server that demonstrates the three key concepts: external server integration, resource management, and task automation. This focused approach shows how MCP servers can work together to create powerful AI-assisted workflows.
+## Conclusion
 
+**Congratulations!** You've built a functional AI Research Learning Hub that demonstrates essential MCP server concepts. Your system successfully:
 
+- **Organizes Research**: Structures research activities with clear tracking and status management
+- **Guides Workflows**: Provides step-by-step processes using complementary tools
+- **Prepares Integration**: Generates optimized strategies for external MCP server usage
+- **Exposes Data**: Makes research information accessible to AI assistants through resources
+- **Scales Thoughtfully**: Provides a foundation that can grow with your research needs
 
-3. **Test with VS Code Copilot**:
-   - Restart VS Code
-   - Use Copilot to interact with your MCP server
-   - Try commands like: "Search for recent papers on transformer models"
+## Key Achievements
 
-### Sample Copilot Interactions
+Through this project, you've learned:
 
-**Paper Search**:
-> "Find the latest research papers on large language models from the past month"
+- **Tool Design Patterns**: How to create tools that work together without redundancy
+- **Data Architecture**: Simple yet extensible approaches to data management
+- **Workflow Orchestration**: Using prompts to guide complex multi-step processes
+- **Resource Design**: Making internal data accessible and useful to AI assistants
+- **Integration Planning**: Preparing for external service integration
 
-**Study Plan Creation**:
-> "Create a 6-week study plan for learning about computer vision and deep learning for an intermediate-level researcher"
+**Next Steps**:
 
-**Trending Analysis**:
-> "What are the trending AI research papers this week in natural language processing?"
+- Experiment with real external MCP integrations
+- Add more sophisticated data analysis capabilities
+- Explore advanced search and discovery features
+- Consider collaboration and sharing functionality
 
-**Progress Tracking**:
-> "Update my learning progress - I've completed reading 3 papers on attention mechanisms"
-
-## Learning Outcomes
-
-- How to build sophisticated MCP servers with multiple external API integrations
-- Implementing complex data models with Pydantic for research and learning domains
-- Creating intelligent content analysis and recommendation systems
-- Building personalized learning experiences with AI assistance
-- Handling asynchronous operations and API rate limiting
-- Implementing caching strategies for performance optimization
-- Understanding how AI assistants can enhance research and learning workflows
-
----
-
-> **Congratulations!** You've built a comprehensive AI Research Learning Hub that helps AI assistants discover papers, analyze research, and create personalized study plans. This advanced MCP server demonstrates the power of connecting AI assistants with specialized research and educational tools.
-
-**Continue exploring**: Try extending your server with additional features like paper citation networks, collaboration recommendations, or integration with academic social networks!
+> **Continue Learning**: This project demonstrates that powerful MCP servers start with clear, simple designs. The patterns you've learned here will serve as the foundation for much more sophisticated research and knowledge management systems.
