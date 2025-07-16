@@ -1,0 +1,37 @@
+[
+  {
+    "title": "Age Checker",
+    "description": "Write a program that asks the user for their age and tells them if they are a child (under 13), teenager (13-17), or adult (18+).",
+    "hint": "Use input() to get the age, convert it to an integer with int(), and use if/elif/else statements to check the different age ranges.",
+    "solution": "age = int(input('Enter your age: '))\nif age < 13:\n    print('You are a child')\nelif age <= 17:\n    print('You are a teenager')\nelse:\n    print('You are an adult')",
+    "difficulty": 2
+  },
+  {
+    "title": "Grade Calculator",
+    "description": "Create a program that takes a test score (0-100) and prints the corresponding letter grade: A (90-100), B (80-89), C (70-79), D (60-69), F (below 60).",
+    "hint": "Use if/elif/else statements to check score ranges. Remember that >= and <= help define ranges.",
+    "solution": "score = int(input('Enter your test score: '))\nif score >= 90:\n    print('Grade: A')\nelif score >= 80:\n    print('Grade: B')\nelif score >= 70:\n    print('Grade: C')\nelif score >= 60:\n    print('Grade: D')\nelse:\n    print('Grade: F')",
+    "difficulty": 2
+  },
+  {
+    "title": "Number Comparison",
+    "description": "Write a program that asks for two numbers and tells the user which number is larger, or if they are equal.",
+    "hint": "Use input() to get two numbers, convert them to integers, then use if/elif/else to compare them.",
+    "solution": "num1 = int(input('Enter first number: '))\nnum2 = int(input('Enter second number: '))\nif num1 > num2:\n    print(f'{num1} is larger than {num2}')\nelif num2 > num1:\n    print(f'{num2} is larger than {num1}')\nelse:\n    print('Both numbers are equal')",
+    "difficulty": 1
+  },
+  {
+    "title": "Even or Odd",
+    "description": "Create a program that asks the user for a number and tells them if it's even or odd.",
+    "hint": "Use the modulo operator (%) to check if a number is divisible by 2. If number % 2 == 0, it's even.",
+    "solution": "number = int(input('Enter a number: '))\nif number % 2 == 0:\n    print(f'{number} is even')\nelse:\n    print(f'{number} is odd')",
+    "difficulty": 1
+  },
+  {
+    "title": "Weather Advisor",
+    "description": "Write a program that asks for the temperature and gives clothing advice: 'Wear a coat' (below 60\u00b0F), 'Wear a sweater' (60-75\u00b0F), or 'Wear light clothes' (above 75\u00b0F).",
+    "hint": "Get the temperature as input, convert to integer, and use if/elif/else to check temperature ranges.",
+    "solution": "temp = int(input('Enter temperature in Fahrenheit: '))\nif temp < 60:\n    print('Wear a coat')\nelif temp <= 75:\n    print('Wear a sweater')\nelse:\n    print('Wear light clothes')",
+    "difficulty": 2
+  }
+]
