@@ -13,7 +13,7 @@ By the end of this tutorial series, you'll have:
 
 ### [Part 1: Setup and Core Concepts](#quick-start)
 
-![mcp-core-concepts](./images/mcp-concepts.png)
+<img src="./images/mcp-core-concepts.png" alt="mcp-core-concepts" width="900" height="600">
 
 **⏱️ Time: 15-20 minutes**
 
