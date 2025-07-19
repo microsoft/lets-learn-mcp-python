@@ -129,7 +129,7 @@ mcp-env\Scripts\activate
 ### 6. Install packages 
 
 ```bash
-uv sync 
+uv sync --active
 ```
 
 ### 6. Walk through the core concepts in the terminal 

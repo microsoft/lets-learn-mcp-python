@@ -1,37 +1,37 @@
 [
   {
-    "title": "Age Checker",
-    "description": "Write a program that asks the user for their age and tells them if they are a child (under 13), teenager (13-17), or adult (18+).",
-    "hint": "Use input() to get the age, convert it to an integer with int(), and use if/elif/else statements to check the different age ranges.",
-    "solution": "age = int(input('Enter your age: '))\nif age < 13:\n    print('You are a child')\nelif age <= 17:\n    print('You are a teenager')\nelse:\n    print('You are an adult')",
+    "title": "Age Classifier",
+    "description": "Write a program that asks for a person's age and classifies them as 'child' (under 13), 'teenager' (13-19), 'adult' (20-64), or 'senior' (65 and above).",
+    "hint": "Use if/elif/else statements to check age ranges. Remember that elif means 'else if'.",
+    "solution": "age = int(input('Enter your age: '))\nif age < 13:\n    print('You are a child')\nelif age <= 19:\n    print('You are a teenager')\nelif age <= 64:\n    print('You are an adult')\nelse:\n    print('You are a senior')",
     "difficulty": 2
+  },
+  {
+    "title": "Number Guessing Game",
+    "description": "Create a simple number guessing game where the computer picks a number between 1 and 10, and the user has 3 attempts to guess it correctly.",
+    "hint": "Use a for loop with range(3) for attempts. Use if statements to check if the guess is correct, too high, or too low.",
+    "solution": "import random\nsecret_number = random.randint(1, 10)\nprint('I\\'m thinking of a number between 1 and 10. You have 3 guesses!')\n\nfor attempt in range(3):\n    guess = int(input(f'Attempt {attempt + 1}: Enter your guess: '))\n    if guess == secret_number:\n        print('Congratulations! You guessed it!')\n        break\n    elif guess < secret_number:\n        print('Too low!')\n    else:\n        print('Too high!')\nelse:\n    print(f'Sorry, the number was {secret_number}')",
+    "difficulty": 3
+  },
+  {
+    "title": "Multiplication Table",
+    "description": "Write a program that prints the multiplication table for a given number from 1 to 10 using a for loop.",
+    "hint": "Use a for loop with range(1, 11) to multiply the input number by each value from 1 to 10.",
+    "solution": "number = int(input('Enter a number for multiplication table: '))\nprint(f'Multiplication table for {number}:')\nfor i in range(1, 11):\n    result = number * i\n    print(f'{number} x {i} = {result}')",
+    "difficulty": 1
+  },
+  {
+    "title": "Even or Odd Counter",
+    "description": "Create a program that asks the user to enter numbers until they enter 0. Count and display how many even and odd numbers were entered.",
+    "hint": "Use a while loop that continues until the user enters 0. Use the modulo operator (%) to check if a number is even or odd.",
+    "solution": "even_count = 0\nodd_count = 0\n\nprint('Enter numbers (enter 0 to stop):')\nwhile True:\n    number = int(input('Enter a number: '))\n    if number == 0:\n        break\n    elif number % 2 == 0:\n        even_count += 1\n    else:\n        odd_count += 1\n\nprint(f'Even numbers entered: {even_count}')\nprint(f'Odd numbers entered: {odd_count}')",
+    "difficulty": 3
   },
   {
     "title": "Grade Calculator",
-    "description": "Create a program that takes a test score (0-100) and prints the corresponding letter grade: A (90-100), B (80-89), C (70-79), D (60-69), F (below 60).",
-    "hint": "Use if/elif/else statements to check score ranges. Remember that >= and <= help define ranges.",
-    "solution": "score = int(input('Enter your test score: '))\nif score >= 90:\n    print('Grade: A')\nelif score >= 80:\n    print('Grade: B')\nelif score >= 70:\n    print('Grade: C')\nelif score >= 60:\n    print('Grade: D')\nelse:\n    print('Grade: F')",
-    "difficulty": 2
-  },
-  {
-    "title": "Number Comparison",
-    "description": "Write a program that asks for two numbers and tells the user which number is larger, or if they are equal.",
-    "hint": "Use input() to get two numbers, convert them to integers, then use if/elif/else to compare them.",
-    "solution": "num1 = int(input('Enter first number: '))\nnum2 = int(input('Enter second number: '))\nif num1 > num2:\n    print(f'{num1} is larger than {num2}')\nelif num2 > num1:\n    print(f'{num2} is larger than {num1}')\nelse:\n    print('Both numbers are equal')",
-    "difficulty": 1
-  },
-  {
-    "title": "Even or Odd",
-    "description": "Create a program that asks the user for a number and tells them if it's even or odd.",
-    "hint": "Use the modulo operator (%) to check if a number is divisible by 2. If number % 2 == 0, it's even.",
-    "solution": "number = int(input('Enter a number: '))\nif number % 2 == 0:\n    print(f'{number} is even')\nelse:\n    print(f'{number} is odd')",
-    "difficulty": 1
-  },
-  {
-    "title": "Weather Advisor",
-    "description": "Write a program that asks for the temperature and gives clothing advice: 'Wear a coat' (below 60\u00b0F), 'Wear a sweater' (60-75\u00b0F), or 'Wear light clothes' (above 75\u00b0F).",
-    "hint": "Get the temperature as input, convert to integer, and use if/elif/else to check temperature ranges.",
-    "solution": "temp = int(input('Enter temperature in Fahrenheit: '))\nif temp < 60:\n    print('Wear a coat')\nelif temp <= 75:\n    print('Wear a sweater')\nelse:\n    print('Wear light clothes')",
+    "description": "Write a program that calculates the average of 5 test scores and assigns a letter grade: A (90-100), B (80-89), C (70-79), D (60-69), F (below 60).",
+    "hint": "Use a for loop to collect 5 scores, calculate the average, then use if/elif statements to assign the letter grade.",
+    "solution": "total_score = 0\nprint('Enter 5 test scores:')\n\nfor i in range(5):\n    score = float(input(f'Enter score {i + 1}: '))\n    total_score += score\n\naverage = total_score / 5\nprint(f'Average score: {average:.1f}')\n\nif average >= 90:\n    grade = 'A'\nelif average >= 80:\n    grade = 'B'\nelif average >= 70:\n    grade = 'C'\nelif average >= 60:\n    grade = 'D'\nelse:\n    grade = 'F'\n\nprint(f'Letter grade: {grade}')",
     "difficulty": 2
   }
 ]

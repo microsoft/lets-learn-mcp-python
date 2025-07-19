@@ -3,7 +3,7 @@
 ],
 "servers": {
       "learnpython-mcp": {
-         "command": "/opt/anaconda3/bin/uv",
+         "command": "/home/codespace/.python/current/bin/uv",
          "args": [
             "--directory",
             ".",

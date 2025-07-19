@@ -53,12 +53,13 @@ uv sync
 
 #### Configure Python Learning MCP
 - Install and configure a Python Learning MCP server in VS Code
+- to get the path to uv, run `which uv` 
 
 Open the **.vscode** folder and make sure you see a file named **mcp.json** with the following content:
 
 ```json
 "learnpython-mcp": {
-         "command": "/opt/anaconda3/bin/uv",
+         "command": "{path-to-uv}",
          "args": [
             "--directory",
             ".",
