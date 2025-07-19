@@ -11,7 +11,9 @@ By the end of this tutorial series, you'll have:
 
 ## Tutorial Structure
 
-### [Part 1: Prerequisites and Setup](part1-setup.md)
+### [Part 1: Setup and Core Concepts](#quick-start)
+
+![mcp-core-concepts](./images/mcp-concepts.png)
 
 **⏱️ Time: 15-20 minutes**
 
@@ -19,9 +21,7 @@ Set up your development environment and understand MCP fundamentals:
 - Install VS Code, Python 3.12+, and Python extension
 - Learn what Model Context Protocol is and why it matters
 - Understand the client-server architecture
-- Verify your development environment
 
-**Start here**: [Part 1: Prerequisites and Setup →](part1-setup.md)
 
 * Note for a more in depth 'Getting Started' with MCP Demo check out [mcp-python-demo](https://github.com/pamelafox/mcp-python-demo)
 

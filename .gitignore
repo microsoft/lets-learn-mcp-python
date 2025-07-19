@@ -1,3 +1,5 @@
-.vscode/mcp.json
 AIResearchHub/__pycache__/paper_manager.cpython-313.pyc
 AIResearchHub/__pycache__/server.cpython-313.pyc
+mcp-env/
+__pycache__/
+
