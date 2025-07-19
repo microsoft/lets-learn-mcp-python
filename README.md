@@ -138,7 +138,7 @@ uv sync
 python part-1-concepts.py
 ```
 
-### 6. Walk through the core concepts in the terminal 
+### 6. Build your first MCP app
 
 2. **Choose your path**:
    - 🐍 **Want to learn Python with MCP?** Jump to [Part 2: Python Study Buddy](part2-study-buddy.md)
