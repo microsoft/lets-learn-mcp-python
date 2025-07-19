@@ -3,6 +3,8 @@
 ## Overview
 In this section, you'll learn how to use MCP servers by building an interactive Python learning companion that helps developers at different skill levels master Python concepts. This hands-on tutorial will teach you how MCP servers work from a consumer perspective before you build your own advanced server.
 
+<img src="./images/study_buddy_app.png" alt="study-buddy-app" width="900" height="600">
+
 ## Step-by-Step Walkthrough
 
 ### 2.1 Project Setup
