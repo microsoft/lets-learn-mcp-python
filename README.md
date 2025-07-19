@@ -92,21 +92,57 @@ Build an advanced MCP server that helps you keep up with the latest AI Research:
 
 If you're ready to dive in immediately:
 
-1. **Prerequisites**: Ensure you have VS Code, Python 3.12+, Docker and Python extension installed
+### 1. Visual Studio Code
+- Download and install [VS Code](https://code.visualstudio.com/)
+- Essential for MCP development and integration
+
+### 2. Python 3.12+
+- Install Python 3.12 or later from [Python.org](https://www.python.org/downloads/)
+- Verify installation: `python --version` or `python3 --version`
+- Ensure pip is installed: `pip --version` or `pip3 --version`
+
+### 3. Python Extension for VS Code
+- Install the [Python](https://marketplace.visualstudio.com/items?itemName=ms-python.python) extension
+- Provides comprehensive Python development support
+- Includes IntelliSense, debugging, and virtual environment management
+
+### 4. Install UV
+To install UV, run the following command in the terminal:
+
+```bash
+pip install uv 
+```
+
+### 5. Create Virtual Environment
+
+```bash
+# Using venv (recommended)
+python -m venv mcp-env
+
+# Activate on macOS/Linux
+source mcp-env/bin/activate
+
+# Activate on Windows
+mcp-env\Scripts\activate
+```
+
+### 6. Install packages 
+
+```bash
+uv sync 
+```
+
+### 6. Walk through the core concepts in the terminal 
+
+```bash
+python part-1-concepts.py
+```
+
+### 6. Walk through the core concepts in the terminal 
+
 2. **Choose your path**:
-   - 🆕 **Need help getting set up?** Start with [Part 1: Setup](part1-setup.md)
    - 🐍 **Want to learn Python with MCP?** Jump to [Part 2: Python Study Buddy](part2-study-buddy.md)
    - 🧠 **Ready to build AI research tools?** Go to [Part 3: AI Research Hub](part3-ai-researcher.md)
-
-## Repository Structure
-
-```
-letslearnmcp-python/
-├── README.md                        # This overview
-├── part1-setup.md                   # Prerequisites and environment setup
-├── part2-study-buddy.md             # Building Python learning companion
-└── part3-ai-researcher.md           # Creating AI research discovery server
-```
 
 ## Additional Resources
 
@@ -125,8 +161,6 @@ This tutorial is open source! Feel free to:
 - 🤝 Share your own MCP server implementations
 - 💬 Help others in the discussions
 
----
-
-**Ready to get started?** Begin with [Part 1: Prerequisites and Setup →](part1-setup.md)
+----
 
 *Happy learning! 🐍🧠*

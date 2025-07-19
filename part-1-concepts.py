@@ -371,7 +371,7 @@ if __name__ == "__main__":
 
 def demo_running_server():
     """Show how to run the MCP server."""
-    display_header("Running Your MCP Server 👩🏾‍💻✨")
+    display_header("Running Your MCP Server 💻✨")
     
     display_step(1, "Server Setup", "Creating the server in Python")
     

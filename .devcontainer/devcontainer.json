@@ -1,0 +1,53 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.245.0/containers/python-3
+{
+    "name": "Python 3",
+    "image": "mcr.microsoft.com/devcontainers/python:3.12-bookworm",
+    "features": {
+        "ghcr.io/devcontainers/features/node:1": {
+        },
+        "ghcr.io/va-h/devcontainers-features/uv": {
+            "version": "latest"
+        },
+        "ghcr.io/devcontainers/features/azure-cli": {
+            "version": "latest"
+        }
+    },
+    // Configure tool-specific properties.
+    "customizations": {
+        // Configure properties specific to VS Code.
+        "vscode": {
+            // Set *default* container specific settings.json values on container create.
+            "settings": {
+                "python.defaultInterpreterPath": "/usr/local/bin/python",
+                "python.testing.pytestEnabled": true,
+                "python.testing.unittestEnabled": false,
+                "files.exclude": {
+                    ".coverage": true,
+                    ".pytest_cache": true,
+                    "__pycache__": true
+                }
+            },
+
+            // Add the IDs of extensions you want installed when the container is created.
+            "extensions": [
+                "ms-python.python",
+                "charliermarsh.ruff",
+                "ms-python.black-formatter"
+            ]
+        }
+    },
+
+    // Use 'forwardPorts' to make a list of ports inside the container available locally.
+    // "forwardPorts": [],
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+	// Fix for https://www.kenmuse.com/blog/avoiding-dubious-ownership-in-dev-containers/
+	"postCreateCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}",
+
+	// Use 'postStartCommand' to run commands after the container is started (more frequently than create).
+	"postStartCommand": "uv sync --group dev && uv run pre-commit install",
+
+    // Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+    "remoteUser": "vscode"
+}

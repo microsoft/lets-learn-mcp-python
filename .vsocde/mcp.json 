@@ -1,0 +1,15 @@
+{
+"inputs": [
+],
+"servers": {
+      "learnpython-mcp": {
+         "command": "/opt/anaconda3/bin/uv",
+         "args": [
+            "--directory",
+            ".",
+            "run",
+            "server_part_2.py"
+         ],
+      }
+}
+}
