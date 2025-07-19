@@ -1,49 +1,60 @@
 # Part 1: Prerequisites and Setup (Python)
 
-> **Navigation**: [← Back to Overview](README-python.md) | [Next: Part 2 - Game App →](part2-game-app-python.md)
-
 ## What You'll Need
 Before diving into MCP development, ensure you have the following tools installed:
 
-### 1. Visual Studio Code
+### 2.1 Project Setup
+
+If you haven't already set up your python environment:
+
+### 2.1.1. Visual Studio Code
 - Download and install [VS Code](https://code.visualstudio.com/)
 - Essential for MCP development and integration
 
-### 2. Python 3.12+
+### 2.1.2. Python 3.12+
 - Install Python 3.12 or later from [Python.org](https://www.python.org/downloads/)
 - Verify installation: `python --version` or `python3 --version`
 - Ensure pip is installed: `pip --version` or `pip3 --version`
 
-### 3. Python Extension for VS Code
+### 2.1.3. Python Extension for VS Code
 - Install the [Python](https://marketplace.visualstudio.com/items?itemName=ms-python.python) extension
 - Provides comprehensive Python development support
 - Includes IntelliSense, debugging, and virtual environment management
 
-### 4. Node.js
-- Download and install [Node.js](https://nodejs.org/) (LTS version recommended)
-- Required for MCP Inspector and other MCP development tools
-- Verify installation: `node --version` and `npm --version`
-- Enables npm package management for MCP tooling
+### 2.1.4. Install UV
+To install UV, run the following command in the terminal:
 
-### 5. Docker Desktop
-- Download and install [Docker Desktop](https://www.docker.com/products/docker-desktop/)
-- Required for running MCP servers in containers
-- Verify installation: `docker --version`
-- Ensure Docker Desktop is running before starting MCP servers
+```bash
+pip install uv 
+```
 
-### 6. Understanding MCP
+### 2.1.5. Create Virtual Environment
+
+```bash
+# Using venv (recommended)
+python -m venv mcp-env
+
+# Activate on macOS/Linux
+source mcp-env/bin/activate
+
+# Activate on Windows
+mcp-env\Scripts\activate
+```
+
+### 2.1.6. Install packages 
+
+```bash
+uv sync 
+```
+
+### 4. Understanding MCP
+
+Next lets look at the following topics: 
 - What is Model Context Protocol?
 - How MCP Servers work with AI assistants
 - The client-server architecture
 - Use cases and benefits
 
-## Environment Verification
-- [ ] VS Code installed and running
-- [ ] Python 3.12+ installed
-- [ ] Python extension active in VS Code
-- [ ] Node.js and npm installed
-- [ ] Docker Desktop installed and running
-- [ ] Basic understanding of MCP concepts
 
 ## What is Model Context Protocol (MCP)?
 
@@ -89,39 +100,8 @@ The Model Context Protocol (MCP) is an open standard that enables AI assistants 
 - **Web Scraping**: Build intelligent data collection tools
 - **API Integration**: Create bridges to external services
 
-## Python Virtual Environment Setup
-
-It's highly recommended to use virtual environments for Python MCP development:
-
-### Create Virtual Environment
-```bash
-# Using venv (recommended)
-python -m venv mcp-env
-
-# Activate on macOS/Linux
-source mcp-env/bin/activate
-
-# Activate on Windows
-mcp-env\Scripts\activate
-```
-
-### Install Core Dependencies
-```bash
-# Install MCP Python SDK
-pip install mcp
-
-# Install development dependencies
-pip install asyncio aiofiles
-```
-
-### VS Code Python Environment
-1. Open VS Code in your project folder
-2. Press `Ctrl+Shift+P` (Cmd+Shift+P on Mac)
-3. Type "Python: Select Interpreter"
-4. Choose the interpreter from your virtual environment
-
 ---
 
 > **Next Step**: Now that you understand MCP and have your environment set up, let's build your first application that uses existing MCP servers.
 
-**Continue to**: [Part 2 - Building MyGame App →](part2-game-app-python.md)
+**Continue to**: [Part 2 - Building a Study Buddy App →](part2-study-buddy.md)
