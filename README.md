@@ -27,7 +27,7 @@ Set up your development environment and understand MCP fundamentals:
 
 ---
 
-### [Part 2: Using MCP Servers - Python Study Buddy](part2-study-buddy-python.md)
+### [Part 2: Using MCP Servers - Python Study Buddy](part2-study-buddy.md)
 **⏱️ Time: 20-35 minutes**
 
 <img src="./images/study_buddy_app.png" alt="study-buddy-app" width="900" height="600">
