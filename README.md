@@ -1,3 +1,5 @@
+[![MSeeP.ai Security Assessment Badge](https://mseep.net/pr/microsoft-lets-learn-mcp-python-badge.png)](https://mseep.ai/app/microsoft-lets-learn-mcp-python)
+
 # Let's Learn MCP with Python - Tutorial Series
 
 A comprehensive guide to understanding and building Model Context Protocol (MCP) Servers for Python developers through interactive learning experiences.
