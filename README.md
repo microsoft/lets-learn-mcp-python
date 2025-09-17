@@ -2,6 +2,8 @@
 
 A comprehensive guide to understanding and building Model Context Protocol (MCP) Servers for Python developers through interactive learning experiences.
 
+**Watch the video** walkthrough on YouTube here: [Let's Learn MCP Python Live](https://www.youtube.com/watch?v=qQZFvz4BTCY&t=2858s)
+
 ## What You'll Build
 
 By the end of this tutorial series, you'll have:
