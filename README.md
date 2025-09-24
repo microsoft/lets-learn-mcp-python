@@ -4,6 +4,8 @@ A comprehensive guide to understanding and building Model Context Protocol (MCP)
 
 **Watch the video** walkthrough on YouTube here: [Let's Learn MCP Python Live](https://www.youtube.com/watch?v=qQZFvz4BTCY&t=2858s)
 
+Code from the **AI Engineer Paris** Talk can be found here: [Building MCP Servers for VS Code](https://github.com/microsoft/lets-learn-mcp-python/tree/main/ai-engineer-25)
+
 ## What You'll Build
 
 By the end of this tutorial series, you'll have:
