@@ -1,0 +1,654 @@
+Sep 23
+
+4:00PM
+Registration & Expo OpeningService
+Room: Expo Hall
+
+
+5:30PM
+Welcome Keynote Featuring Mistral Master Stage
+Room: Master Stage
+
+
+6:30PM
+Welcome ReceptionService
+Room: Expo Hall
+
+Catch the welcome keynote, mingle with other conference attendees, and enjoy hors d'oeuvres
+
+Sep 24
+
+8:00AM
+RegistrationService
+Room: Expo Hall
+
+
+9:30AM
+Event KickoffMaster Stage
+Room: Master Stage
+
+
+9:45AM
+Emil Eifrem
+/
+Neo4j
+
+Architecting Agent Memory with Connected DataMaster Stage
+Room: Master Stage
+
+Today’s GenAI systems can retrieve, synthesize, and predict. But to reason and adapt, they need something deeper: memory. As agents mature from stateless prompts to long-lived autonomous behavior, memory becomes the infrastructure challenge no one has solved. Much of the industry has focused on retrieval and vector stores, but these fall short when agents need to persist identity, track intent, and behave with human understanding.
+
+Emil Eifrem, creator of the property graph database and co-founder and CEO of Neo4j, will show how graph-native architectures are becoming foundational for agentic memory at scale. Graphs excel at encoding relationships, causality, and continuity over time - key ingredients for agents that can retain identity, learn, evolve, and accumulate knowledge across sessions.
+
+Emil will draw from production use cases across autonomous systems, copilots, and enterprise AI deployments. He will show how to model episodic, semantic, and goal-directed memory using graphs: techniques to preserve relevance, privacy, and explainability in long-lived agents; and why graph-native memory systems unlock compounding intelligence and product advantage.
+
+This talk offers a blueprint for going beyond retrieval toward memory architectures that reason, adapt, and remember like humans do, whether you’re building frameworks, infrastructure, or the agents themselves.
+
+
+10:00AM
+Talk TBADiscovery Track #1
+Room: Founder's Cafe
+
+
+10:00AM
+Pierre Burgy
+/
+Strapi
+
+Vibe > Benchmarks: Rethinking AI Evaluation for the Real WorldDiscovery Track #2
+Room: Junior Stage
+
+AI evaluations are broken. Benchmark scores look good on paper, but they rarely translate into user value. What matters isn’t how your model performs on curated test sets—it’s what your users actually use. I’ll walk through why most AI evals are a distraction, how we built “vibe benchmarks” by watching usage patterns, and how qualitative feedback loops are often more scalable than gold labels. If you’re serious about shipping AI, this talk will change how you measure success.
+
+
+10:00AM
+Ogi Bostjancic
+/
+Sentry
+
+Open Source Champions: Gamify GitHub Contributions with an AI AgentWorkshop
+Room: Central Room
+
+In this beginner-friendly workshop, we will develop an AI agent that analyzes GitHub open source contributions and assigns RPG-style attribute levels and character classes. We’ll go over basic agent development practices like tweaking system prompts, building reliable tools, and orchestrating simple decision flows. We’ll also touch on observability: how to monitor agent behavior, track key signals, and make sure it stays on track.
+
+
+10:15AM
+Tushar Jain
+/
+Docker
+
+Democratizing AI Agents: Building, Sharing, and Securing Made SimpleMaster Stage
+Room: Master Stage
+
+
+10:30AM
+Martin Woodward
+/
+GitHub
+
+Building MCP's at GitHub ScaleMaster Stage
+Room: Master Stage
+
+The MCP Protocol is evolving rapidly. Building one that scales, evolves at the same pace as the community while also being secure is hard. Get the latest from GitHub's Martin Woodward as he shares the lessons they have learned from building one of the most popular MCP servers in use today.
+
+
+10:30AM
+Alexandre Girard
+/
+Airbyte
+
+Beyond the MCP: Production Data Patterns for AI Agent SystemsDiscovery Track #1
+Room: Founder's Cafe
+
+If you’re like us, you rushed to build your own MCP server only to find the protocol isn’t ready for primetime. While MCP handles individual tool calls well, it doesn't address state persistence, bulk operations, real-time sync, or output storage. Here’s why that’s a problem. Those aren’t edge cases, they’re the core architecture problems of deploying agents in production.
+
+This talk presents four essential data movement patterns for production MCP systems: single ingress (efficiently loading context), bulk ingress (processing large datasets), single egress (persisting outputs), and bulk egress (synchronizing downstream systems). You'll learn specific MCP limitations, architecture patterns for each data flow, and when to extend MCP versus build external orchestration. Through practical examples, you'll gain a framework for bridging the gap between MCP and your next production build.
+
+
+10:30AM
+Merrill Lutsky
+/
+Graphite
+
+Inside Chat: how we taught AI to review code like a senior engineerDiscovery Track #2
+Room: Junior Stage
+
+Most AI agents are built to write code. Reviewing it is a harder, more nuanced challenge. It requires asking questions, identifying risk, understanding architecture, and knowing when something doesn’t feel right. In other words, it requires judgment.
+
+In this talk, we’ll walk through how we built Chat, our agent for code review, by modeling how senior engineers approach the task. That includes how they pull context from the current PR, the surrounding codebase, historical changes, and broader team conventions. We’ll share how we designed the system to decide which context to reach for, how we use evals to measure useful behavior, and why reviewing code requires a completely different agentic workflow than generating it.
+
+This is not a talk about training models. It’s a deep dive into behavior design, context orchestration, and the real-world lessons that shaped how we built and shipped Chat.
+
+
+11:00AM
+Morning BreakService
+Room: Expo Hall
+
+
+11:05AM
+Miguel Betegón
+/
+Sentry
+
+Live Debugging AI AgentsExpo Track
+Room: Expo Hall
+
+Let's live-fix a slow agent together. In this demo we'll see how to use Sentry's AI agent monitoring to ship agents with confidence.
+
+
+11:10AM
+Srilakshmi Chavali
+/
+Arize AI
+
+Beyond Single Turns: Evaluating AI Agents at the Session LevelExpo Track
+Room: Expo Hall
+
+Conversations with AI play out over many turns, yet most evaluations stop at single responses. In this lightning talk, we’ll explore how session-level evaluations in Arize AX shift the focus to the entire interaction. This approach lets teams design evaluations that capture qualities such as accuracy, goal completion, or user frustration—surfacing patterns across conversations that single-turn checks miss. By looking at the full flow, practitioners gain a more realistic view of how their AI behaves in practice.
+
+
+11:30AM
+Jen Person
+/
+Koyeb
+
+Yann Leger
+/
+Koyeb
+
+Building for the Agentic Era: The Future of AI InfrastructureMaster Stage
+Room: Master Stage
+
+The LLM and GPU gold rush is over. What comes next is the rise of agentic workflows and with them, a more diverse, resilient infrastructure built on a mix of GPUs, accelerators, and good ole CPUs.
+
+AI agents are reshaping what infrastructure must deliver. They don’t just consume compute; they demand fast, secure sandboxed environments, continuous inference at scale, and seamless interaction across heterogeneous accelerators, memory, and storage systems.
+
+In this talk, we’ll map out the state of infrastructure for agents and inference: the technical building blocks, the trade-offs from chips to virtualization and storage, and the broader shifts needed to make AI infrastructure a true foundation for the agentic era.
+
+
+11:30AM
+Robert Brennan
+/
+OpenHands
+
+Automating massive refactors with parallel agentsDiscovery Track #1
+Room: Founder's Cafe
+
+Today's agents are best at small, atomic coding tasks. Much larger tasks--like major refactors and breaking dependency updates--are highly automatable but hard to one-shot.
+
+In this session, we'll discuss patterns for orchestrating large-scale code changes with swarms of agents and a human in the loop.
+
+We'll also work through a concrete example: migrating an entire codebase from one React state management library to another.
+
+
+11:30AM
+Marlene Mhangami
+/
+Microsoft
+
+Building MCP Servers for VS CodeDiscovery Track #2
+Room: Junior Stage
+
+VS Code is the most popular code editor in the world, and combined with GitHub Copilot, it provides AI Engineers the opportunity ton speed up their workflows with AI. In this talk we'll explore what it looks like to build an MCP server for VS Code. We'll explore prompts, tools, resources and sampling, and understand how these can be used to with high or low autonomy. We'll also explore some of the security issues associated with MCP and how using the Azure AI Inference API can mitigate them.
+
+
+11:30AM
+Djordje Lukic
+/
+Docker
+
+Jean-Laurent de Morlhon
+/
+Docker
+
+Mat Wilson
+/
+tbc
+
+Building Intelligent Multi-Agent Systems with docker cagent: From Solo AI to Collaborative TeamsWorkshop
+Room: Central Room
+
+Join us for a hands-on workshop where you’ll learn to orchestrate AI agent teams that collaborate like real experts using Docker’s cagent.
+
+In this session, we’ll move beyond single-model interactions to create sophisticated multi-agent systems where specialized AI agents work together, delegate tasks intelligently, and leverage external tools through the Model Context Protocol (MCP).
+
+What You’ll Learn:
+
+Design and configure specialized AI agents with distinct roles and capabilities
+
+Implement smart delegation patterns between agents for complex problem-solving
+
+Integrate external tools and APIs using MCP servers (local and remote)
+
+Leverage built-in tools like memory, task management, and reasoning capabilities
+
+Deploy agent configurations using Docker Hub for team collaboration
+
+Switch seamlessly between AI providers (OpenAI, Anthropic, Google, and Docker Model Runner)
+
+Hands-On Activities: Participants will build a working multi-agent system starting from a simple assistant and evolving it into a coordinated team. We’ll create agents that can remember context, manage tasks, access filesystems, search the web, and delegate work to specialists - all configured through simple YAML files.
+
+Who Should Attend: Developers, architects, and engineering leaders interested in practical AI agent orchestration, whether for automating workflows, building AI-powered applications, or exploring the future of collaborative AI systems.
+
+Prerequisites:
+
+Basic understanding of YAML configuration
+
+Familiarity with API concepts
+
+Laptop with Go 1.24+ installed (or ability to use prebuilt binaries)
+
+API key from at least one provider (OpenAI, Anthropic, or Google)
+
+Key Takeaway: You’ll leave with a working multi-agent system, ready-to-use configuration templates, and the knowledge to design and deploy your own AI agent teams for real-world applications.
+
+
+12:00PM
+Andreas Blattmann
+/
+Black Forest Labs
+
+Inside FLUX, How It Really WorksMaster Stage
+Room: Master Stage
+
+Image generation is amazing, but editing? Most approaches either sacrifice quality for speed, or you get inconsistent results when users make iterative edits. Inference times is also a major bottleneck for real-world applications.
+
+In this talk, Andreas will share how Black Forest Labs solve these challenges with FLUX.1 Kontext. You'll learn exactly how Latent Flow Matching enables consistent iterative editing, and the secrets behind Adversarial Diffusion Distillation, the technique that allows us to achieves near real-time inference enabling editing that solves the consistency problem.
+
+
+12:00PM
+Aleksandar Mitic
+/
+Spotify
+
+Jo Kelly-Fenton
+/
+Spotify
+
+Rewriting all of Spotify's code base, all the time.Discovery Track #1
+Room: Founder's Cafe
+
+We don't need LLMs to write new code. We need them to clean up the mess we already made.
+
+In mature organizations, we have to maintain and migrate the existing codebase. Engineers are constantly balancing new feature development with endless software upkeep.
+
+But what if you could rewrite your codebase, every single day, across thousands of repositories? What if your engineers didn't have to maintain their code?
+
+At Spotify, we are seeing early success using LLMs to perform predictable, repeatable and effortless code migrations.
+
+In this talk, we’ll share how we created an Agentic Migrator that has gotten over a 1000 PRs merged across several engineering disciplines. We will tell you how we reason about solving the complexity of LLMs maintaining code at scale. From managing build feedback loops across thousands of repos, to evaluating prompt effectiveness and mastering the sheer complexity of our diverse codebase.
+
+
+12:00PM
+Yves Brissaud
+/
+Dagger
+
+The rise of local CI tooling. Thanks AI coding agents!Discovery Track #2
+Room: Junior Stage
+
+AI-powered coding agents are everywhere. They help us write boilerplate and boring code, surprise us by generating features, or even build entire applications. And this is more than a passing trend: agents are already part of our daily workflow. But the unwritten aspect is that our role as developers is shifting. Our code is no longer written by us alone. We now need to review, orchestrate, integrate the work of multiple autonomous agents, sometimes across multiple codebases. In a sense, we are becoming something that once sounded outdated: integrators. To help us in this new, critical, role, we need tools. We need local Continuous Integration tools: the kind that also integrates well with coding agents. And the good news is those tools already exist in the open-source world, container-use to offer a proper isolated environment for coding agents, and dagger to continuously integrate the generated code.
+
+
+12:30PM
+Lunch BreakService
+Room: Expo Hall
+
+
+12:45PM
+Stephen Batifol
+/
+Black Forest Labs
+
+Lunch & Learn - Inside FLUX: From Open-Weights to Advanced ModelsWorkshop
+Room: Central Room
+
+Step inside the FLUX family - from open-weights you can fine-tune and customize, to advanced models built for high-quality results out of the box. In this interactive workshop, we’ll break down the differences between FLUX [dev], FLUX [pro], and FLUX Kontext, and explore where each shines. You’ll learn how to prompt effectively, use references for control, and move from first image generation to editing and transformation. Expect live demos, hands-on experimentation, and practical techniques you can take straight into your own projects.
+
+
+12:45PM
+Expo Talk TBAService
+Room: Expo Hall
+
+
+12:50PM
+Paul-Louis Nech
+/
+Algolia
+
+An intro to Algolia Agent StudioExpo Track
+Room: Expo Hall
+
+Learn how you can use Algolia to power AI Agents with RAG, Recommendations, and more.
+
+
+1:20PM
+Djordje Lukic
+/
+Docker
+
+How a Docker Engineer Automated Their Way to an Agent FrameworkExpo Track
+Room: Expo Hall
+
+
+1:30PM
+Zach Blumenfeld
+/
+Neo4j
+
+Context Engineering with Graphs for More Intelligent AgentsExpo Track
+Room: Expo Hall
+
+The biggest challenge in building reliable AI agents isn't the LLM—it's context management. Most developers struggle with the same problem: there's no consistent way to fit the right information into LLM context windows, making agent workflows fragile and complex. This talk demonstrates how graph-based context engineering solves this by shifting complexity from your application code to the data layer. We'll explore how modeling context as connected data enables agents to naturally traverse relationships and perform multi-hop reasoning - delivering faster, more accurate retrieval, maintaining persistent memory across sessions, and enabling agents that grow smarter as your data and requirements evolve. Through practical examples, you'll see how graph structures transform agents from brittle prototypes into intelligent systems capable of explainable reasoning and reliable execution. You'll leave with concrete patterns for implementing graph-based context engineering that makes your agents genuinely smarter and more dependable.
+
+
+2:00PM
+Laurent Sifre
+/
+H Company
+
+Assembling the Future: Open Source Bricks for the Next Generation of AIMaster Stage
+Room: Master Stage
+
+The future of AI won’t be built behind closed doors. Open source is essential to creating the strike point where innovation can scale without prohibitive costs, and without relying solely on ever-larger, power- and funding-hungry models. But efficiency alone isn’t enough: real progress happens when developers can freely experiment, combine, and extend the “bricks” that make up modern AI systems.
+
+In this talk, Laurent will explain why open source is central to AI’s next wave, how it accelerates iteration and adoption, and why giving developers the freedom to play with the building blocks matters. He will also talk about a new portal that brings these bricks together in one place — making it easier than ever for builders to discover, test, and assemble the technologies shaping the next generation of AI.
+
+
+2:00PM
+Tuana Çelik
+/
+LlamaIndex
+
+Building an open-source NotebookLM alternativeDiscovery Track #1
+Room: Founder's Cafe
+
+Most developers start with basic RAG implementations, but production AI systems demand sophisticated multi-step reasoning, as well as additional tooling. This talk demonstrates building production-ready agent workflows using the newly released LlamaIndex Workflows 1.0. We will demonstrate how we can build powerful agents within the confines of our specific workflow design, minimizing the risk of error or unwanted behaviour.
+
+We'll see the evolution from a simple RAG setup to a complex agents that handle tool use, document analysis, report generation, and human validation. Using Workflows 1.0's event-driven architecture, we'll build practical patterns for query planning, memory persistence, and state management—all running in real-time during the presentation.
+
+The session features NotebookLlama, our open-source NotebookLM alternative, demonstrating how Workflows 1.0 powers document-to-podcast generation and multi-modal analysis in production
+
+
+2:00PM
+Bertrand Charpentier
+/
+Pruna AI
+
+How to make your AI models faster, smaller, cheaper, greener?Discovery Track #2
+Room: Junior Stage
+
+AI models become more complex, the cost of inference—both in terms of computation and energy—continues to rise. In this talk, we will explore how combining compression techniques such as quantization, pruning, caching, and distillation can significantly optimize model performance during inference. By applying these methods, combining compression make possible to reduce model size and computational load while maintaining quality, thus making AI more accessible and environmentally sustainable.
+
+
+2:00PM
+Adam Cowley
+/
+Neo4j
+
+Hands-on GraphRAGWorkshop
+Room: Central Room
+
+In this course, you will learn how Neo4j and Knowledge Graphs can help you create Generative AI (GenAI) applications. We will explore where semantic search falls short, how relationships provide context to text chunks, and how LLMs can convert natural language into database queries that produce deterministic results.
+
+
+2:25PM
+Andreas Kollegger
+/
+Neo4j
+
+Vibing With DataMaster Stage
+Room: Master Stage
+
+Generating data is as easy as generating code, with the same joys and tribulations. Raise hands for a subject and we'll yolo some data together.
+
+
+2:30PM
+Vaibhav Srivastav
+/
+Hugging Face
+
+State of Open LLMs in 2025Master Stage
+Room: Master Stage
+
+In this talk, VB from Hugging Face will share the latest trends shaping open large language models in 2025 — from new model releases and adoption patterns to the challenges of scaling and regulation. The session will highlight where open-source is thriving, what hurdles remain, and what engineers should expect next.
+
+
+2:30PM
+Alberto Castelo
+/
+Shopify
+
+Context Engineering: The Art of Feeding LLMsDiscovery Track #1
+Room: Founder's Cafe
+
+You've picked your model, written your prompts, but your AI still hallucinates about user data. Welcome to context engineering—the discipline of choosing what information to feed your LLM and when. Through real examples from Shopify Sidekick, we'll explore how the right context transforms mediocre outputs into magic. Learn our framework for context selection, strategies for working within token limits, and how we dynamically compose context based on user intent. This talk will change how you think about LLM inputs and show why context engineering might be the highest-leverage skill in production AI systems.
+
+
+2:30PM
+Miguel Betegón
+/
+Sentry
+
+MCP isn’t good yet we got to 30M requests/monthDiscovery Track #2
+Room: Junior Stage
+
+Is MCP a thing? A lot of companies are still wondering. It CAN be a thing, or you can spend your AI budget chasing your tail.
+
+This talk brings clarity on the path we at Sentry followed to get to 30M requests/month on our MCP server and got us into the Microsoft Build keynote, Anthropic keynote, etc. From our latest outage to building our own monitoring.
+
+
+3:00PM
+Aparna Dhinakaran
+/
+Arize AI
+
+System Prompt Learning for AgentsMaster Stage
+Room: Master Stage
+
+Humans aren’t frozen in the way they think; why, then, are system prompts static today? In order for agents to learn and adapt, they must be able to update the system prompts themselves.
+
+In this session, we will release data from new experiments on how agents can pick up explanations of fixes and annotations and build out instruction updates for system prompts – with demos showing these techniques used in real agent environments, from code agents to gaming agents.
+
+Similar to how humans learn what to do from their environment, this approach uses feedback to improve and drive an agent.
+
+With this approach: prompts evolve, natural language feedback = error signal, a MetaPrompt rewrites/reinserts targeted instruction, and agents run a prompt learning loop post deployment -- allowing them to continuously improve upon themselves online.
+
+
+3:00PM
+Jesús Espino
+/
+Gitpod
+
+How We Built an AI Agent for Highly Regulated EnvironmentsDiscovery Track #1
+Room: Founder's Cafe
+
+If you work in healthcare, finance, or government, running an AI coding agent in your development environment can be risky. In these environments, safety, control, and compliance aren’t optional. They’re required. But what if you could build an AI agent that works with all those rules, not against them? In this talk, we'll describe how we built Ona, Gitpod’s programming agent, to run fully isolated inside secure development environments. We’ll cover how isolation, auditability, and reproducibility are achieved in Ona, and how we provide all these capabilities without customer data ever leaving their infrastructure. You’ll learn how to design agents that are safe to use, even in places where “move fast and break things” is not an option.
+
+
+3:00PM
+Daniel Homola
+/
+BMW Group
+
+LLM-Based GUI Agents: Bridging Human Interfaces and Autonomous AIDiscovery Track #2
+Room: Junior Stage
+
+AI agents are evolving beyond APIs to navigate the same graphical interfaces humans use every day. What if large language models could power agents to operate applications as seamlessly as humans, unlocking automation in domains where APIs fall short? In this talk, we will explore why GUI agents matter, compare API-based and GUI-based approaches, and share practical insights from building an LLM-based GUI agent.
+
+
+3:00PM
+Workshop TBAWorkshop
+Room: Central Room
+
+
+3:30PM
+Steeve Morin
+/
+ZML
+
+Towards unlimited contexts: faster-than-GPU sparse logarithmic attention on CPUMaster Stage
+Room: Master Stage
+
+zml/attnd replaces dense attention with a sparse, predictive attention algorithm that operates in log-linear time, dramatically reducing the compute requirements while maintaining output quality. It operates on CPU over UDP and matches or even outperforms GPUs in key scenarios.
+
+
+3:30PM
+Oleg Šelajev
+/
+Docker
+
+Building AI workflows: from local experiments to serving usersDiscovery Track #1
+Room: Founder's Cafe
+
+Everyone can throw together an LLM, some MCP tools, and a chat interface, and get an AI assistant we could only dream of a few years back. Add some “business logic” prompts, and you get an AI workflow; hopefully a helpful one. But how do you take it from a local hack to a production application? Typically, you drown in privacy questions, juggle npx commands for MCPs, and end up debugging OAuth flows before it hopefully starts to make sense.
+
+In this session, we show a repeatable process for turning your local AI workflow experiments into a production-ready deployment using containerized, static configurations.
+
+Whether you prefer chat interfaces or replace them with application UIs, you’ll leave with solid ideas for going from a cool demo to real applications without the existential dread of DevOps.
+
+
+3:30PM
+Lars Trieloff
+/
+Adobe
+
+Taking your AI home lab on the road: a look at (small-ish) AI in 2025Discovery Track #2
+Room: Junior Stage
+
+Running LLMs, VLMs, and voice models on consumer hardware may sound even more intimidating than paying for multiple 200-Euro subscriptions for frontier models, but it doesn't have to be. We'll take a look at open models, tools, and infrastructure that fit onto your desk, suitcase, or pocket.
+
+Ah. This text field is so small.
+
+In this talk, I will share my personal experiences with consumer-sized LLMs, using LM Studio, Ollama, MLX, and how to tie them together to build interesting MCPs for an audience of one, run small models on even smaller machines, and talk about taking your home lab on the road: metaphorically through tunnels, and literally (by doing a live demo on my Mac Studio, straight from my suitcase)
+
+Listen to this talk if you've been interested in local LLMs, but to afraid to ask what a Hugging Face is. Leave this talk with concrete next steps toward your own AI home lab.
+
+
+4:00PM
+Afternoon BreakService
+Room: Expo Hall
+
+
+4:30PM
+Prateek Rungta
+/
+OpenAI
+
+Stop Guessing: Autotune Your MCP ServerMaster Stage
+Room: Master Stage
+
+Too many knobs, too little time—designing the perfect MCP server often feels like a dark art. Engineers constantly struggle to balance latency, cost, and correctness, manually tweaking configurations without a clear path to the optimal setup for their specific APIs and use cases. What if you could automatically generate and evaluate dozens of MCP designs to find the one that perfectly fits your needs? In this talk, you will learn how to use a novel autotuning framework, defined in a simple YAML spec, that leverages a Latin-square experiment design to rigorously evaluate prompts and configurations, systematically identifying the most efficient MCP server design for your workload.
+
+
+4:30PM
+Talk TBADiscovery Track #1
+Room: Founder's Cafe
+
+
+4:30PM
+Thomas Schmidt
+/
+Metabase
+
+Everything That Can Go Wrong Building Analytics Agents (And How We Survived It)Discovery Track #2
+Room: Junior Stage
+
+Text2SQL demos work great until real users show up. Then your agent finds 47 different customer tables, hallucinates metrics that don't exist, and confidently tells the CEO that churn is -40% (which would be impressive if it weren't completely wrong).
+
+I am part of the team that builds Metabot - an AI assistant that lives inside Metabase to help users answer their own data questions without bothering the analytics team. Simple goal, right? Turns out teaching an AI to navigate real organizational data is like teaching someone to drive in a city where all the street signs are wrong and half the roads don't exist on any map.
+
+This talk is your field guide to the chaos we've encountered. We'll share the specific disasters that taught us hard lessons: why your pristine demo data means nothing, how users will find every edge case you never considered, why business rules written nowhere will break everything, and how "temporary" tables from 2019 somehow become production dependencies.
+
+You'll walk away with battle-tested strategies for building analytics agents that survive contact with real organizations: practical approaches to data documentation, designing agent tools that won't spectacularly backfire, and building guardrails that actually work when chaos strikes. This isn't a sales pitch disguised as a tech talk - it's a real field guide to the beautiful disaster of production AI systems.
+
+
+4:30PM
+SallyAnn DeLucia
+/
+Arize AI
+
+Systematic Agent Evaluation with ArizeWorkshop
+Room: Central Room
+
+How do we move from “my agent works on my examples” to having confidence that it works systematically? In this workshop, we’ll walk through a structured approach to agent evaluation using Arize.
+
+Participants will learn how to turn raw agent interactions into actionable evaluations: surfacing common issues through annotation, grouping them into reusable evaluation templates, and validating them at scale. We’ll introduce Alyx to generate evaluators, experiment with them in the playground, and discuss how to take evaluations from offline design to continuous online evaluation.
+
+Finally, we’ll explore the different levels of evaluation — span, trace, and session — and see how our agent graph provides a holistic view of agent performance. By the end, you’ll leave with a practical framework and transferable skills for systematically evaluating and improving any AI agent.
+
+Key Takeaways: -A reliable framework for evaluation: Learn where to begin when evaluating agents, moving from raw annotations to structured evaluation templates and automated evaluators. -Building intuition for better agents: See how a systematic approach to evaluation develops the intuition needed to design stronger, more reliable AI systems. -Arize workflows in practice: Experience how Arize supports this process end-to-end — from annotation and template creation to running experiments and monitoring in production. -A systems approach to evaluation: Understand why evaluating agents requires more than testing single prompts — it’s about building a continuous, structured system for quality and reliability.
+
+Format: Interactive demos, guided exercises, and live iteration on real LLM outputs. Participants will walk away with practical techniques they can apply immediately in their own LLM projects.
+
+
+5:00PM
+Paige Bailey
+/
+Google DeepMind
+
+What's new and what's next for generative AIMaster Stage
+Room: Master Stage
+
+The way we create is fundamentally changing. This isn't about better chatbots; it's about giving builders the power to craft new worlds, tell new stories, and solve problems in ways we couldn't before.
+
+In this session, we'll show you what this new era of creation looks like using Google DeepMind's latest models and hands-on demos in AI Studio.
+
+You'll see Veo 3 craft cinematic video with dialogue and sound from a single prompt, watch Genie 3 spin up playable, interactive worlds from a simple idea, and witness the new multimodal reasoning that powers it all with Gemini 2.5 Pro. We'll even give you a live look at the Gemini 2.5 Flash Image Preview (Nano-Banana), a tool that lets you edit and fuse images with simple, natural language. This is the future, and we’re building it in the open with you.
+
+We'll also show Gemma 3, our new family of open models engineered to run with incredible performance directly on your hardware. This puts state-of-the-art multimodal AI on laptops and phones, opening a new frontier for on-device applications.
+
+
+5:00PM
+Peter Schuurman
+/
+Google
+
+Ekin Karabulut
+/
+NVIDIA
+
+Stop Wasting GPU Flops on Cold Starts: High Performance Inference with Model StreamerDiscovery Track #1
+Room: Founder's Cafe
+
+Traffic is spiking to your ML application. Your autoscaler kicks in. But instead of serving more requests, your new replicas are stuck downloading massive model weights, loading them onto GPUs, and warming up inference engines like vLLM. Minutes pass, response latency spikes, making your application unusable. You haggle with DevOps to overprovision capacity so your application remains reliable. Cold starts become hot pain, hurting latency, driving up costs, and making "just scale up" a lot more complicated than it sounds.
+
+In this talk, we’ll introduce a pattern for optimizing model loading for high performance inference. A case study, Run:ai Model Streamer, is an open-source tool built to reduce cold start times by streaming model weights directly to GPU memory in parallel. It’s natively integrated with vLLM and SGLang, supports MoE-style multi-file loading, and saturating object storage bandwidth across different cloud storage backends. And all without requiring changes to your model format.
+
+We’ll walk through how Model Streamer works, what bottlenecks it solves, and what we've learned from running it in production. Expect benchmarks, practical tips, and best practices for making large-model inference on Kubernetes faster and more efficient.
+
+If you’ve ever waited for a model to load and thought "surely this could be faster", this talk is for you!
+
+
+5:00PM
+Ivan Burazin
+/
+Daytona
+
+AX is the only Experience that MattersDiscovery Track #2
+Room: Junior Stage
+
+If you’re building devtools for humans, you’re building for the past.
+
+Already a quarter of Y Combinator’s latest batch used AI to write 95% or more of their code. AI agents are scaling at an exponential rate and soon, they’ll outnumber human developers by orders of magnitude.
+
+The real bottleneck isn’t intelligence. It’s tooling. Terminals, local machines, and dashboards weren’t built for agents. They make do… until they can’t.
+
+In this talk, I’ll share how we killed the CLI at Daytona, rebuilt our infrastructure from first principles, and what it takes to build devtools that agents can actually use. Because in an agent-native future, if agents can’t use your tool, no one will.
+
+
+5:30PM
+Neil Zeghidour
+/
+Kyutai
+
+Scaling real-time voice AIMaster Stage
+Room: Master Stage
+
+Neil will describe Kyutai's open science work on real-time voice AI: from full-duplex conversations with Moshi, to speech-to-speech translation with Hibiki and customizable voice agents with Unmute.
+
+
+6:00PM
+After PartyService
+Room: Expo Hall
+
